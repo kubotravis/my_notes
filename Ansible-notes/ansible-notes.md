@@ -43,8 +43,9 @@ Ansible Config -> Global configuration of ansible stays here
 [Notify if the target been skipped]
 [etc]
 
-Some variable information
-Three variables
+**Some variable information**
+Three are some variables
+
 1. Host Variables [will be there is Inventory files]
 2. Facts - Gathered data from target system before the playbook run, you can use those values to evaluate something, if required !
 3. Dynamic Variables - These are the var/values created during the course of playbook run & destroyed after a playbook run
