@@ -147,11 +147,11 @@ What actually happens when you run the PING modules against the any targer serve
 **How to run the ad-hoc commands**
 [by using the command modules]
 
-`$ ansible 100.67.165.4 -i inventory -u centos -m command -a "uptime" -k`
+`$ ansible 192.168.1.10 -i inventory -u centos -m command -a "uptime" -k`
 
 Acutally you NO need to use the `-m command` to specify module because its default, so you can use as follows too
 
-`$ ansible 100.67.165.4 -i inventory -u centos -a "uptime" -k`
+`$ ansible 192.168.1.10 -i inventory -u centos -a "uptime" -k`
 
 - Well there is another module call `Shell`, where you can execute the shell commands.
 - So, what is the difference in command & shell modules ?
