@@ -124,12 +124,12 @@ Here is an example of more verbose mode
 $ ansible 192.168.1.10 -i ./inventory -u vagrant -m ping -k -vvv
 
 Loaded callback minimal of type stdout, v2.0
-<100.67.165.4> ESTABLISH SSH CONNECTION FOR USER: centos
-<100.67.165.4> SSH: EXEC sshpass -d12 ssh -C -vvv -o ControlMaster=auto -o ControlPersist=60s -o User=centos -o ConnectTimeout=10 -o ControlPath=/home/centos/.ansible/cp/ansible-ssh-%h-%p-%r 192.168.1.10 '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo $HOME/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752 `" && echo ansible-tmp-1467459236.91-162511876456752="` echo $HOME/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752 `" ) && sleep 0'"'"''
-<100.67.165.4> PUT /tmp/tmpvdp3jC TO /home/centos/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752/ping
-<100.67.165.4> SSH: EXEC sshpass -d12 sftp -o BatchMode=no -b - -C -vvv -o ControlMaster=auto -o ControlPersist=60s -o User=centos -o ConnectTimeout=10 -o ControlPath=/home/centos/.ansible/cp/ansible-ssh-%h-%p-%r '[100.67.165.4]'
-<100.67.165.4> ESTABLISH SSH CONNECTION FOR USER: centos
-<100.67.165.4> SSH: EXEC sshpass -d12 ssh -C -vvv -o ControlMaster=auto -o ControlPersist=60s -o User=centos -o ConnectTimeout=10 -o ControlPath=/home/centos/.ansible/cp/ansible-ssh-%h-%p-%r -tt 192.168.1.10 '/bin/sh -c '"'"'LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LC_MESSAGES=en_US.UTF-8 /usr/bin/python /home/centos/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752/ping; rm -rf "/home/centos/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752/" > /dev/null 2>&1 && sleep 0'"'"''
+<192.168.1.4> ESTABLISH SSH CONNECTION FOR USER: centos
+<192.168.1.4> SSH: EXEC sshpass -d12 ssh -C -vvv -o ControlMaster=auto -o ControlPersist=60s -o User=centos -o ConnectTimeout=10 -o ControlPath=/home/centos/.ansible/cp/ansible-ssh-%h-%p-%r 192.168.1.10 '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo $HOME/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752 `" && echo ansible-tmp-1467459236.91-162511876456752="` echo $HOME/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752 `" ) && sleep 0'"'"''
+<192.168.1.4> PUT /tmp/tmpvdp3jC TO /home/centos/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752/ping
+<192.168.1.4> SSH: EXEC sshpass -d12 sftp -o BatchMode=no -b - -C -vvv -o ControlMaster=auto -o ControlPersist=60s -o User=centos -o ConnectTimeout=10 -o ControlPath=/home/centos/.ansible/cp/ansible-ssh-%h-%p-%r '[192.168.1.4]'
+<192.168.1.4> ESTABLISH SSH CONNECTION FOR USER: centos
+<192.168.1.4> SSH: EXEC sshpass -d12 ssh -C -vvv -o ControlMaster=auto -o ControlPersist=60s -o User=centos -o ConnectTimeout=10 -o ControlPath=/home/centos/.ansible/cp/ansible-ssh-%h-%p-%r -tt 192.168.1.10 '/bin/sh -c '"'"'LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LC_MESSAGES=en_US.UTF-8 /usr/bin/python /home/centos/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752/ping; rm -rf "/home/centos/.ansible/tmp/ansible-tmp-1467459236.91-162511876456752/" > /dev/null 2>&1 && sleep 0'"'"''
 ```
 
 **What happens during the execution**
@@ -156,3 +156,212 @@ Acutally you NO need to use the `-m command` to specify module because its defau
 - Well there is another module call `Shell`, where you can execute the shell commands.
 - So, what is the difference in command & shell modules ?
   Shell module support ENVIRONMENT vairables (HOME,USER,PWD & others) where `command` moduls doesn't support.
+
+#### 3 Ansible Inventory and Configuration
+
+**Inventory fundamentals**
+- Basically inventory file can be at anywhere in the files system
+- What are things can be done on the inventory files
+  - Create an required parameter with values
+  - Create Groups
+  - Grouping the Groups
+  - Assign variables
+  - Scaling out of multiple files
+  - Creating static/dynamic information
+
+**Sample inventory files**
+
+**Sample 1**
+
+```
+[db]  # its a groupname
+server1.ex.com ansible_ssh_user=dummy ansible_ssh_pass=123 # ansible related var/val
+server2.ex.com ansible_python_interpreter=/usr/bin/python
+
+[datacenter-west:children]   # here dc-west has the 'db' group as child group (means all nodes under db group are target)
+db
+
+[datacenter-west]   # here dc-west has the 'db' as NODE (actual target not a GROUP)
+db
+
+[datacenter-west:vars]   # here dc-west has the group specific var/values
+ansible_ssh_user=testuser
+ansible_ssh_pass=khjhj%^$%
+```
+
+**Sample 2**
+
+```
+exp-elastic501z ansible_ssh_host=192.168.1.209
+exp-elastic502z ansible_ssh_host=192.168.1.4
+exp-rundeck501z ansible_ssh_host=192.168.1.37
+exp-kibana401z ansible_ssh_host=192.168.1.216
+exp-elastic601z ansible_ssh_host=192.168.1.169
+exp-kibana101z ansible_ssh_host=192.168.1.236
+exp-jslave402z ansible_ssh_host=192.168.1.113
+exp-jslave401z ansible_ssh_host=192.168.1.115
+exp-jmaster401z ansible_ssh_host=192.168.1.116
+
+[efk]
+exp-elastic501z
+exp-elastic502z
+exp-kibana401z
+exp-kibana101z
+
+[cicd]
+exp-rundeck501z
+exp-jmaster401z
+exp-jslave401z
+exp-jslave402z
+
+[exp:children]
+efk
+cicd
+
+[exp:vars]
+ansible_ssh_user=centos
+ansible_ssh_passwd=redhat or [ansible_ssh_private_key_file=~/.ssh/id_rsa]
+```
+
+**Scaling out with multiple files**
+
+- Basic directory structure
+  - Means that, taking about managing multiple inventory files by ansible which gives more clarity. also which has the directory structure
+  - Ansible can merge separate inventory files into 1 file (if you want)
+
+- Variable and values precedence
+  - That how variables can be applied while executing any tasks on ansibe
+
+```  
+    > All (Group_vars)
+    >> GroupName (Group_vars)
+    >>> HostName (Host_Vars)
+```
+  - From the above we can see host specific variables will override anything which is specified in the group & all
+
+**Demo Scaling out with multiple files**
+
+- Here we are going to demo 'How variable precedence flows based on ENV directory files'
+- Except the inventory file, all files are used for declaring the variables
+
+Info:
+  My directory structure
+  Files which are listed here are YAML files [So remember the YAML syntax]
+
+```
+├── exp
+│   ├── group_vars   # All group related VAR goes here
+│   │   ├── all
+│   │   └── efk      # Specific group relate VAR goes here
+│   ├── host_vars
+│   │   └── some_server_name_from_efk     # Host specific VAR goes here
+│   └── inventory_exp
+└── test
+    ├── group_vars
+    │   ├── all
+    │   └── efk
+    ├── host_vars
+    │   └── some_server_name_from_efk
+    └── inventory_test
+```
+
+- `inventory_exp` is the same file from ex-2 inventory file
+- Now, we are going to add some user on the target server by using the 'all' file to define the var/values
+
+  `$ vi exp/group_vars/all`
+
+  Above file content goes like below
+
+  ```
+  ---
+  # This is our test username
+  username: testuser
+  ```
+
+`$ ansible efk -i exp/inventory_exp -m user -a "name={{username}} password=12345"`
+
+where,
+
+"-a" to pass the ARG values to the module "user", about the parenthesis declaration will se in PLAYBOOK creation
+
+- Watch the error regarding the cicd files since its not YAML you might get the error regarding this
+- Also there is chance of failing due to permission, so supply the "--sudo" with it.
+
+`$ ansible efk -i "exp/inventory_exp" -m user -a "name={{username}} passwd=12345" --sudo`
+
+- Now create the "exp/group_vars/efk" file with same content different userame & run the above command.
+- This is time it will create the USERNAME which is specified the "group_vars" file
+
+`$ ansible efk -i "exp/inventory_exp" -m user -a "name={{username}} passwd=12345" --sudo`
+
+- Now create the "exp/host_vars/some_server_name_from_efk" with same content but with DIFFERENT username & run the same command as above
+- This is time it will create the USERNAME which is mentioned in the HOST specific var file
+
+`$ ansible efk -i "exp/inventory_exp" -m user -a "name={{username}} passwd=12345" --sudo`
+
+- So this how precedence follows, simply it goes has follows
+  ```
+    Host Precedence
+    |
+    |_ Group Precendence
+        |
+        |_ All precedence
+  ```
+
+**Ansible Configuration basics**
+
+- This how Ansible will load the configuration file location  [Anyone if them, at time not ALL]
+
+```
+ 1st ~> $ANSIBLE_CONFIG [variable]
+ 2nd ~> ./config.cfg [From the $PWD]
+ 3rd ~> ~/.config [from $HOME as hidden file]
+ 4th ~> /etc/ansible/ansible.cfg [A global config file] - used at LAST
+```
+
+- IMPORTANT - Configuration files are NOT merged, FIRST on always wins [which ever it finds]
+- But you can onverride the configuration settings by ENV variables
+
+```
+ex:
+  $ANSIBLE_<sometthing>=123
+  [or]
+  export ANSIBLE_<something>=123
+  [or]
+  Update the things in bashrc/profile files to load as soon as you login
+```
+- Some of the setting for [under [default] section]
+ - **fork** [how many execution at the time, default is 5, you can make your own number here]
+ - **host_key_cehcking** [highly recommended on PROD]
+ - **logging** [writes info above exec, default it NULL, you can set any files location to log the info]
+
+**Demo on above theory**
+
+- Here you can find the all options that available `http://docs.ansible.com/ansible/intro_configuration.html`
+
+- EX-1
+ - delete the content ~/.ssh/known_host
+ - create the ansible.cfg file (inside/outside of the exp dir)
+ - Append the following conetent
+
+```
+[defaults]
+host_key_checking=False
+```
+ - now if you run any ansible command to check the HOST related it will work
+ - Also it appends the TARGET fingerprint in to the ~/.ssh/known_host too in background silently
+
+- EX-2
+
+ - export the following to check the failure case above scenarion
+  `$ export $ANSIBLE_HOST_KEY_CHECKING=True`
+ - Run any ansible command against the Target servers it will fail now !
+ - Because the precedence goes to ENV variables over CFG files
+
+**Working with Python 3 based systems**
+
+ - its pretty simple , install python 2.x version on the target system & update the HOST parameter to pick up the same
+```
+$ vim invetory
+10.0.0.0 ansible_python_interpreter=/usr/bin/python2.7
+```
