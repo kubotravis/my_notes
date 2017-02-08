@@ -1,7 +1,7 @@
 All about Sensu Monitoring
 --------------------------
 
-##### 01. Architecture
+### 01. Architecture
 - Runs the Checks (Internal & External - like Nagios)
 - It can also schedule service check on periodic time (Its called Standalone method) - (In this case totally independent)
 - So sensu client executes the checks & Passes the result to the RabbitMq on the Sensu server
@@ -14,7 +14,7 @@ All about Sensu Monitoring
   - Its talks with Redis & RMQ and provides required data in a format of REST-API
 - So that Sensu-cli/Dashboard will utilize the API for anypther purpose
 
-##### 02. Other Features
+### 02. Other Features
 - Its not required to maintained (new/old) client configuration on Sensu server
 - All the clients can register itself to sensu server ON-THE-FLY
 - For instance when the apache package been installed on the server & meantime you can configure the Apache related checks on the server. So that it automatically register with Sensu server.
@@ -27,7 +27,7 @@ How? - by writing new META-CHECK (may be cron job) and sending the response to t
 [Basicall JSON report sent localhost port 3030 & it gets forward to the Sensu server via Sensu client]
 
 
-##### 03. Installation
+### 03. Installation
 
 **Platform: Ubuntu**
 - [Installing the Redis](https://sensuapp.org/docs/0.26/installation/install-redis-on-ubuntu-debian.html)
@@ -38,7 +38,7 @@ How? - by writing new META-CHECK (may be cron job) and sending the response to t
 - config_memory.json # this is check configuration, leave it for a while
 - default_handler.json # this is a handler configuration, just cat 'ing the actual output. will be covered in detail later.
 
-##### 04. Installing the Sensu Client
+### 04. Installing the Sensu Client
 - Theres is no specific package for client (Sensu API/Server/Client all comes together)
 - Also all comes together in the omnibus package
 - Once after the installation create the `client.json` file under `/etc/sensu/conf.d` directory
@@ -46,7 +46,7 @@ How? - by writing new META-CHECK (may be cron job) and sending the response to t
 - configure the check_mem.sh file under /etc/sensu/plugins to run the checks
   (we are doing above because we made a subscription while setting up the Sensu server, so this client will respond to that)
 
-##### 05. Adding the handlers
+### 05. Adding the handlers
 - Default handler will simply cat the piped content but you can configure the MAIL handler to send mail
 - You can install through gem
 ```
@@ -55,7 +55,7 @@ How? - by writing new META-CHECK (may be cron job) and sending the response to t
 ```
 - Fill the required information (in JSON) file pass ARG to handler will take care the rest
 
-##### 06. Adding the Real Check
+### 06. Adding the Real Check
 - Here we are kind of migrating the Nagios service checks to the sensu client side
 - Installing the nagios pluing
   `$ apt-get install nagios-plugins-basic`
@@ -78,13 +78,15 @@ How? - by writing new META-CHECK (may be cron job) and sending the response to t
   `jq . file-name.json`
 - Now restart the sensu client & tail the logs
 
-**Note**
+**Note:-**
+
 Every monitoring system has some sort of/ or its own queue system.
 Sensu don't want to re-invent the wheel so using awesome `RabbitMQ` for that.
 
 `jq` - tool for 'pretty' view of the JSON
 
 **Client configuration**
+
 - Below is to connect and send information to RabbitMQ queue fron the client node
 
   `$ vim /etc/sensu/conf.d/rabbitmq.json`
@@ -92,7 +94,7 @@ Sensu don't want to re-invent the wheel so using awesome `RabbitMQ` for that.
 ```json
   {
     "rabbitmq": {
-      "host": "100.67.165.37",
+      "host": "10.0.0.2",
       "port": 5672,
       "vhost": "/sensu",
       "user": "sensu",
