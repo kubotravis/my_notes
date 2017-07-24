@@ -175,10 +175,10 @@ thisjoe.callme()        # Here we called the method, by an Object
 
 - But in the above scenario we didn't passwd any value to the method while calling it such as "thisjoe.callme()", but still passes
 
-- What if we remove the "self" label & execute the code, it will retuen the error ! as follows
-  callme() takes no arguments (1 given)
-  Wait a second, we didnt supply any args in the "thisjoe.callme()" call !!?
-  This is pretty clear that "thisjoe.callme()" still passing to arguments to the Class Method still nothing in it !
+- What if we remove the "self" label & execute the code, it will retuen the error. as follows
+  - callme() takes no arguments (1 given)
+  - Wait a second, we didnt supply any args in the "thisjoe.callme()" call !!?
+  - This is pretty clear that "thisjoe.callme()" still passing to arguments to the Class Method still nothing in it !
 
 - Here is the MAGIC !
     When we call an METHOD on a an INSTANCE, the INSTANCE gets passed as the first argument to the METHOD automatically !
