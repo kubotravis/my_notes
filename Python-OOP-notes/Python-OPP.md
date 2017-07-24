@@ -126,14 +126,12 @@ print that_obj.var
 
 - How the Instances get the var ? Since instances are the COPY/RUNNING from the class, so it can access the Class Variables
 
-
-- 6 Points to Understanding the Class
-  (So far we covered the 2 points, so i'm gonna write those 2 of them)
-    i) An "Instance" of "class" knows what class its from
-    ii) Varibales (vars) defined in the class are available to the instance
+**6 Points to Understanding the Class**
+(So far we covered the 2 points, so i'm gonna write those 2 of them)
+  -  "Instance" of "class" knows what class its from
+  - Varibales (vars) defined in the class are available to the instance
 
 **Instance Method**
-
 - Just a recall, a variable declared in the Class is accessible by its Instance(s)
 - Why we recalling is ? - Anything that declared in the Class accessible by its Instance
   In the same we are going to access the Method (a function) which is defined inside the Class
