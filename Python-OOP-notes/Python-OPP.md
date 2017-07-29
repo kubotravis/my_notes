@@ -172,15 +172,12 @@ thisjoe.callme()        # Here we called the method, by an Object
 
 - In general if you declare a function with ARG, when call that function you have to supply required ARG in the CALL method.
     Else it will return a error
-
 - But in the above scenario we didn't passwd any value to the method while calling it such as "thisjoe.callme()", but still passes
-
 - What if we remove the "self" label & execute the code, it will retuen the error. as follows
   - callme() takes no arguments (1 given)
   - Wait a second, we didnt supply any args in the "thisjoe.callme()" call !!?
   - This is pretty clear that "thisjoe.callme()" still passing to arguments to the Class Method still nothing in it.
-
-- Here is the MAGIC !
+- Here is the MAGIC
   - When we call an METHOD on a an INSTANCE, the INSTANCE gets passed as the first argument to the METHOD automatically
   - This is the default IMPLICIT behaviour that we shoud aware
   - So now you understand what is "self" in there ! Its the instance ! Lets try to print the "self" then.
@@ -383,6 +380,223 @@ print i.get_val()   # Will return "9", since "Hi" will through away with "except
 ```
 
 **Explanation:** (About the what code doinng)
-- It has the set_val method where it changing the anyvalue to interger & saving it to val. Then later GET the same & INCREMENT the same
-- Please not the "Try&Except" in case if its fails to convert the given value to an integer it simply "return" (Return nothing)
+- It has the `set_val` method where it changing the any value to interger & saving it to `val`. Then later GETs the same & INCREMENT the same
+- Please note the "Try & Except" in case if its fails to convert the given value to an integer it simply "return" (Return nothing)
 - What if we think smart that chage the ATTRIBUTE value directly in body of the code (we did it in the previous example, here we are trying to that's wrong)
+
+- For chaning the ATTRIBUTE value directly please refer the below code
+
+```python
+#!/usr/bin/python
+
+class MyInteger(object):
+  def set_val(self, val):
+    try:
+      val = int(val)
+    except:
+      return
+    self.val = val
+
+  def get_val(self):
+    return self.val
+
+  def increment_val(self):
+    self.val = self.val + 1
+
+i = MyInteger()
+
+# Here we are DIRECTLY setting the ATTRIBUTE values
+i.val = 'Hi'
+print i.increment_val()
+```
+- when you execute the above code you will get an error !
+
+```bash
+    ./5c-Class-Increment-attribute-change-directly.py
+    Traceback (most recent call last):
+      File "./5c-Class-Increment-attribute-change-directly.py", line 21, in <module>
+        print i.increment_val()
+      File "./5c-Class-Increment-attribute-change-directly.py", line 15, in increment_val
+        self.val = self.val + 1
+    TypeError: cannot concatenate 'str' and 'int' objects
+```
+
+- From the above output you can see, it BYPASS the "try & except" goes for increment. This is what we are taking about the `GATEWAY`. So don't SET the values in body of script by DIRECTLY setting some values for ATTRIBUTE
+
+**Thing that Learned**
+
+- So, by requiring the `set_val()` method we ensure the integrity of the `val` value as INT. This is what we meant by an Encapsulation.
+- Setting the value of method attribute, without calling "Setter" is we called "Breaking the Encapsulation". Big `NO` step
+
+**Further**
+- We are going to see how we can enforce values should go through even we set DIRECTLY
+
+**Encapsulation**
+
+- 1st of 3 pillars in OOP
+- As referred to an safe storage of the data (as attribute) in an instance
+- Data should only accessed through instance methods
+- Data should validated as correct (depending on the requirement set in the class methods)
+- Data should be safe from changes by external processes
+
+Breaking the Encapsulation:
+- Although normally set in a setter method, instance attribute values can be seet anywhere
+- Encapsulation in Python is a voluntary restriction
+- Python does not implement data hiding, as other language does
+
+**Init Constructor**
+
+**The` __init__` constructor**
+- Its special method which is allows to initialize the attributes at the time instance is constructed
+- The double underscore `__init__` considered as the PRIVATE/MAGIC method
+  - PRIVATE => Because its intention to use internally, not called by the user of the class
+  - MAGIC => Its called automatically when the particular event happens
+  - `__init__` is automatically called when the instances is constructed)
+
+- So "init" is called automatically when the instance is initialized, refer the below example
+
+```python
+#!/usr/bin/python
+
+class MyNum(object):
+  def __init__(self):
+    print "calling the __init__"
+    self.val = 0
+
+  def increment(self):
+    self.val = self.val + 1
+
+dd=MyNum()
+dd.increment()
+dd.increment()
+
+print dd.val
+```
+- Another example with passing some values
+
+```python
+#!/usr/bin/python
+
+class MyNum(object):
+  def __init__(self, value):
+    print "calling the __init__"
+    self.val = value
+
+  def increment(self):
+    self.val = self.val + 1
+
+dd=MyNum(5)
+dd.increment()
+dd.increment()
+
+print dd.val
+```
+- From the above example, you can see we passed the value "5" to `__init__` & then incremented
+- There is a chance we can pass the some "STRING" value also, but that not supposed to be. Let's see how we can set the integrity GATE to the init method
+- Refer the below code INTEGRITY check
+
+```python
+#!/usr/bin/python
+
+class MyNum(object):
+  def __init__(self, value):
+    try:
+      value = int(value)
+    except ValueError:
+      value = 0
+    self.val = value
+
+  def increment(self):
+    self.val = self.val + 1
+
+aa = MyNum('Hello')
+bb = MyNum(100)
+
+aa.increment()
+aa.increment()
+bb.increment()
+
+print aa.val
+print bb.val
+```
+ - From the above the, even we passed the "string" value as argument to init but it got ingore due the INTEGRITY check we made via TRY&EXCEPT
+
+ **Notes**
+- `__init__` is a keyword variable, It must be named as `init`
+- Its a method automatically called when a new instance is constructed
+- If its not present, it is not called
+- The `self` argument is the 1st appearence of the instance
+- `__init__` offers the opprtunity to initialize attributes in the instance at the time of construction
+
+**Class Attributes**
+
+This section describes about - Class valus vs Instance value/attributes
+
+- Below code a very Normal Class
+
+```python
+#!/usr/bin/python
+
+class YourClass(object):
+  classy = 10
+
+  def set_value(self):
+    self.insty = 100
+
+dd = YourClass()
+
+dd.set_value()
+print(dd.classy)
+print(dd.insty)
+```
+
+- Here is an another example to demostrate the ATTRIBUTE preference in the INSTANCE
+
+```python
+#!/usr/bin/python
+
+class YourClass(object):
+  classy = 'Class Value !'
+
+dd = YourClass()
+
+print(dd.classy)
+
+dd.classy = "Inst Value"
+
+print(dd.classy)
+
+del dd.classy
+
+print(dd.classy)
+```
+
+Output
+
+```bash
+./7A-Inst-Attribute-Preference.py
+Class Value !
+Inst Value
+Class Value !
+```
+
+- From the above, it proves that ATTRIBUTE lookup order in the INSTANCE 1st it will lookup itself ! Then only ot will go for Class value/attribute
+
+**Notes**
+Class Attributes Vs. Instance Attributes
+  - Attributes / Variables in the class are acccessible through the instance
+  - Instance attribute also accessible from instance
+  - when we use the syntax object.attribute, we are asking Python to look up the attribute
+      -> First in the instance
+      -> Then in the class
+  - Method calls through the instance follow this lookup
+
+**From the 6 point**
+ - Variable defined in the class are "Class Attributes"
+ - When we read an attribute, Python looks for it first in the instance, and then the class
+
+**Working with Class and Instance Data**
+
+- We know that Class data can be accessed by as many INSTANCE we create!
+  So class data intend to created for "SHARE"
+- Will start with an example
