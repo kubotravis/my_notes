@@ -165,6 +165,7 @@ PARENTHESIS - here is the example
 ```
 
 Modulo - Calculating the reminder in the division
+
 ```python
 >>> print 100 / 16
 6
@@ -173,6 +174,7 @@ Modulo - Calculating the reminder in the division
 ```
 
 We can put the above in the single line
+
 ```python
 >>> print "100 divided 16 is :", 100 / 16, "An the reminder is:", 100 % 16
 100 divided 16 is : 6 An the reminder is: 4
@@ -252,62 +254,65 @@ print "Have FUN !!!!!"
 #END
 ```
 
-***Strings I***
+**Strings I**
 
 - Calculating the string with len()
+
 ```python
-    msg="Hello"
-    len(msg)
+>>> import string
+>>> msg="Hello"
+>>> len(msg)
+5
 ```
 
 - Extracting specific string from given word, the very first character noted as "0"
 
 ```python
-    msg="Hello"
-    print msg[0]
+>>> print msg[0]
+H
 ```
 - Some other examples
 
 ```python
-    msg="abcdefghijklmnopqrstuvwxyz"
+msg="abcdefghijklmnopqrstuvwxyz"
 
-    # For the below, very first character noted as "0
-    print msg[:] #return the entire string (just same as "print msg")
+For the below, very first character noted as "0
 
-    print msg[:2] #Print only very first two (0,1) character (boundary value never gets printed)
-    'ab'
+- `print msg[:]` - return the entire string (just same as "print msg")
 
-    print msg[2:10] #Print from 2rd to 9 character only & don't print the rest
-    'cdefghij'
+- `print msg[:2]` - Print only very first two (0,1) character (boundary value never gets printed)
+`'ab'`
 
-    print msg[2::10] #print the from the 2rd value + every 5th occurences of it
-    'cmw'
+- `print msg[2:10]` - Print from 2rd to 9 character only & don't print the rest
+`'cdefghij'`
+
+- `print msg[2::10]` - print the from the 2rd value + every 5th occurences of it
+`'cmw'`
 
 **Strings II**
 
 In order to use the string related operation you have use the following once after the shebang shell `import string`
 
 ```python
+#!/usr/bin/python
+import string
 
-  #!/usr/bin/python
-  import string
+name="yo yo"
 
-  name="yo yo"
+print len(name) # This is doesn't required the "import string"
+print string.upper(name)
+print string.lower(name)
 
-  print len(name) # This is doesn't required the "import string"
-  print string.upper(name)
-  print string.lower(name)
+print string.capwords(name)   # Cap's the every first char of word
+print string.capitalize(name)  # very first char of whole sentence
 
-  print string.capwords(name)   # Cap's the every first char of word
-  print string.capitalize(name)  # very first char of whole sentence
-
-  print string.split(name)  # Here delimiter considered as " " since name delimited by the same
+print string.split(name)  # Here delimiter considered as " " since name delimited by the same
 
 ```
 
 **String III**
 
-write the script from above - String II
+Write the script from above - String II
 (Include "for" looping the each character in the string)
 
 ```python
