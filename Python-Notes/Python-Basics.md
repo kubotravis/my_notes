@@ -272,9 +272,7 @@ print "Have FUN !!!!!"
 H
 ```
 - Some other examples
-
-```python
-msg="abcdefghijklmnopqrstuvwxyz"
+`msg="abcdefghijklmnopqrstuvwxyz"`
 
 For the below, very first character noted as "0
 
