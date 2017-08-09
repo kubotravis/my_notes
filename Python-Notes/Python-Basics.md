@@ -94,7 +94,7 @@ Python
 <type 'float'>
 ```
 
-Another useful - id() - which is useful to get the memory location where the values currently stored in
+Another useful build function is `id()` - which is useful to get the memory location where the values currently stored in
 
 ```python
 >>> price = 365.00
@@ -133,8 +133,8 @@ Also note that, if you update existing variable also it update to NEW location
  A - Addition
  S - Subtraction
 ```
-  - 1. Above are the order python evaluates in the math operation
-  - 2. But there are some things, Since D&M considered as same priority it will interchange in case D comes first while evaluating
+  - Above are the order python evaluates in the math operation
+  - But there are some things, Since D&M considered as same priority it will interchange in case D comes first while evaluating
   Same applies for A & S
 
 examples
@@ -177,3 +177,164 @@ We can put the above in the single line
 >>> print "100 divided 16 is :", 100 / 16, "An the reminder is:", 100 % 16
 100 divided 16 is : 6 An the reminder is: 4
 ```
+
+**STDIN input**
+
+String Concatenation
+
+```python
+>>> print "First", "Second"
+First Second
+>>> print "First" + "Second"    # This is the example of string concatenation, simple "+" will do
+FirstSecond
+>>> print "First "*3            # Another example (simply use space in string itself to get rid of ugly format)
+First First First
+```
+
+Some more examples
+
+```python
+>>> print "First\n"*3
+First
+First
+First
+
+>>> print "First\t"*3
+First First First
+```
+
+**How to collect the input from the user ?**
+- By using the "input" & "raw_input" built in functions
+    - "input" will be used get the INT data type
+    - "raw_input" for string & all others as well
+
+```python
+>>> message = raw_input("Wassup? ")                 # Just storing the input values from user in "message"
+Wassup? Hi There
+>>> print message
+Hi There
+
+>>> my_num = input("Please enter any INT: ")       # Just storing the input values from user in "my_num"
+Please enter any INT: 6
+>>> print my_num
+6
+```
+
+If you tried insert the "String" under "input" function it will return error, refer the below
+
+```python
+>>> my_num = input("Please enter any INT: ")
+Please enter any INT: one million
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<string>", line 1
+    one million
+              ^
+SyntaxError: unexpected EOF while parsing
+```
+
+Sample script
+
+```python
+#!/usr/bin/python
+# Purpose: Hello World
+# Author: Me
+# Date : 31-12-2017
+
+name = raw_input("Yo, Whats your name? ")
+age = input("BTW, Dude what is your age? ")
+exp = input("Well, How long you gonna live? ")
+org = exp - age
+
+print "Dear", name, "As per our calculation, you are gonna live only,", org, "more years !"
+print "Have FUN !!!!!"
+
+#END
+```
+
+***Strings I***
+
+- Calculating the string with len()
+```python
+    msg="Hello"
+    len(msg)
+```
+
+- Extracting specific string from given word, the very first character noted as "0"
+
+```python
+    msg="Hello"
+    print msg[0]
+```
+- Some other examples
+
+```python
+    msg="abcdefghijklmnopqrstuvwxyz"
+
+    # For the below, very first character noted as "0
+    print msg[:] #return the entire string (just same as "print msg")
+
+    print msg[:2] #Print only very first two (0,1) character (boundary value never gets printed)
+    'ab'
+
+    print msg[2:10] #Print from 2rd to 9 character only & don't print the rest
+    'cdefghij'
+
+    print msg[2::10] #print the from the 2rd value + every 5th occurences of it
+    'cmw'
+
+**Strings II**
+
+In order to use the string related operation you have use the following once after the shebang shell `import string`
+
+```python
+
+  #!/usr/bin/python
+  import string
+
+  name="yo yo"
+
+  print len(name) # This is doesn't required the "import string"
+  print string.upper(name)
+  print string.lower(name)
+
+  print string.capwords(name)   # Cap's the every first char of word
+  print string.capitalize(name)  # very first char of whole sentence
+
+  print string.split(name)  # Here delimiter considered as " " since name delimited by the same
+
+```
+
+**String III**
+
+write the script from above - String II
+(Include "for" looping the each character in the string)
+
+```python
+#!/usr/bin/python
+import string
+
+name="yo yo"
+print "The Length of the name is: ", len(name)
+print "Convert to Upper: ", string.upper(name)
+print "Convert to back to Lower: ", string.lower(name)
+
+print "CAP the very each 1st word only: ", string.capwords(name)
+print "CAP the very 1st word: ", string.capitalize(name)
+
+print "Split the name: ", string.split(name)
+
+print "Loop the Name: "
+for i in name:
+  print i
+
+Name="yo yo"
+
+if name == Name:
+  print "They Match"
+
+print "Join the Name: ", string.join(name)
+```
+
+**Note**
+Interactive Shell doesn't required the "print" to return value but script EXPLICITLY required the "print" return the values
