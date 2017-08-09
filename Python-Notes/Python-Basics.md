@@ -15,7 +15,7 @@ Be alert on INDENTATION
 2
 >>> print 1 * 3 (Mul)
 >>> print 4 / 2 (Divide)
->>> print 2**16 (Exponentiona - 2Power16)
+>>> print 2**16 (Exponentional - 2 Power 16)
 >>> print 10 - 5 (Sub)
 ```
 
@@ -341,3 +341,258 @@ print "Join the Name: ", string.join(name)
 
 **Note**
 Interactive Shell doesn't required the "print" to return value but script EXPLICITLY required the "print" return the values
+
+**Lists I**
+- Which is used to allow store in the "String,int, whatever" values in comma separated list & gives access to them
+- List should declared inside the `[]` with `","` separated values
+- anything quoted within `""` are considered as strings
+
+Functions which is available over the List
+- `listname.reverse()` - reverse the content
+- `listname.append()` - appends to list with new list in the element place (Refer the below code result)
+- Basically above makes the nested list
+- `listname.pop()` Removes the last # It considers the list as stack & perform LIFO method
+- listname.extend()` - this is Extends the listname with new list
+- listname.insert()` - inset the element into the specific index value, refer the below code
+
+```
+ex:
+    listname.insert(index-position, value)
+    listname.insert(0,1)
+```
+
+**NOTE**
+FIFO = used in the queue mechanism, especially in Mailing system
+
+```python
+#!/usr/bin/python
+import string
+
+numlist=[1,2,3,4,5]
+print "Print the Numlist", numlist
+
+numlist.reverse()
+print "Reverse it: ", numlist
+
+numlist.reverse()
+print "Back to Normal", numlist
+
+numlist2=[6,7,8,9]
+# Below does the append (not the extend)
+# Appending the numlist2 into numlist1 in last element place
+# Does the nested list
+numlist.append(numlist2)
+print "1St element" ,numlist[0]
+print "3rd element", numlist[2]
+
+print "6th element", numlist[5] # It prints full list which nested
+print "1th from 6th element", numlist[5][0] # It prints only the 1st element from numlist[5]
+print "4th from 6th element", numlist[5][3]
+
+# Delete the last
+numlist.pop()
+print "After POP", numlist
+
+numlist.extend(numlist2)
+print "After extent: ", numlist
+
+numlist.pop()
+print "Removing again last item from numlist: ", numlist
+
+# Remoce the very 1st element from the numlist
+numlist.pop(0)
+print "After removing 1st element by pop: ", numlist
+
+# INserting the values
+numlist.insert(0, 1)
+print "After Insert: ", numlist
+```
+
+**List II**
+
+- `range(10)` => print 0-9 in list format
+- `range(1, 10)` => prints from 1 to 9
+- `range(1,10,2)` => prints incremental of 2, from 1 through 10, such as below
+
+```python
+>>> range(10)
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> range(1, 10)
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> range(1,10,2)
+[1, 3, 5, 7, 9]
+```
+
+Lets move string based LIST
+
+ - string list needs to be inside the double quotes `""`
+ - Almost all functions are same which ever we evaluated in the `INTEGER` based list as above
+
+```python
+#!/usr/bin/python
+
+# Simply printing some INT by range
+print range(10)
+print range(1,10)
+print range(1,10,2)
+
+stringlist = ["My", "String", "list", "is", "HERE", "Okay"]
+
+print stringlist
+
+stringlist.reverse()
+print "Lets Reverse it", stringlist
+
+stringlist.reverse()
+print "Revert the stringlist back to normal, ", stringlist
+
+strlist2 = ["This", "is", "Another", "string", "list"]
+print "Lets print string list2: ", strlist2
+
+stringlist.append(strlist2)
+print "After Append: ", stringlist
+
+print "1st Elmement: ", stringlist[0]
+print "3rd Element: ", stringlist[2]
+print "7th Element", stringlist[6]
+
+print "1st of 7th Element: ", stringlist[6][0]
+
+print "Pop the last element from stringlist, ", stringlist.pop()
+
+stringlist.pop(0)
+
+print "After Removing the 1st element: ", stringlist
+
+stringlist.insert(0, "myNew")
+
+print "After insert: ", stringlist
+```
+
+**List III**
+
+- Gonna dealing with the String manipulation, by processing the logfile
+- `logfile[0:3]` - prints 0th, 1st & 2nd index element not the 3rd one: refer below code
+
+```python
+#!/usr/bin/python
+import string
+
+logfile = "20170122 1.1.1.1 9000 2.2.2.2 8880 300 test.go"
+
+print "The logfile content: ", logfile
+
+logfile2 = string.split(logfile)
+
+print "The logfile2 is: ", logfile2
+
+print "logfile is: ", type(logfile)
+print "logfile2 is: ", type(logfile2)
+
+print "1st element in logfile2", logfile2[0]
+
+print "Only 0st to 2nd", logfile2[0:3]
+
+print "1st to 5th", logfile2[1:6]
+
+print "Form the new LIst from the above output"
+logfile3 = logfile2[1:6]
+
+print "Here we go, logfile3: ", logfile3
+print "Bring the logfile3 bck to string", string.join(logfile3)
+
+# now it prints as the list, because in previous we didn't save it ! just converted and printed
+print logfile3
+```
+
+**List IV**
+
+Writes the script for the above (We already did it)
+
+**Dictionaries**
+
+Intro:
+
+- list as mutable => means can change at any time by using the string operation
+- Tuple => Are immutable, we cant change once it declared | In other words its readonly
+
+```python
+#!/usr/bin/python
+
+distro = ["Centos", "RHEL", "SuSe", "Debian", "Ubuntu", "Arch", "Manjaro"]
+
+print distro
+print type(distro)
+
+# Instead deleting the Changin the values
+
+distro[2] = "OpenSuse"
+print distro
+
+# So above operation applicable only in List, Not possible in Tuples
+# Lets do that also
+
+# This is how you have declare the Tuples by using () parenthesis
+distro2 = ("Rpi", "Elementary", "Solus", "Xbmc")
+print distro2
+print type(distro2)
+
+# When you trying to change the you get an error
+# like blow
+# distro2[2] = "Fedora"
+
+# We append, prepend to it, but we can change # Serious I'm not sure i have to check
+```
+
+That's all abut the Tuples
+
+**Jumping into Dictionary**
+- Basically its a BULK in number of Key-Value pair
+- Also its an un-ordered list / If you want list, then you have to use SORT function but it by default print in KEY in alphabetical order
+
+```python
+#!/usr/bin/python
+
+mydict = {'Year': 2017, 'Month': 1, 'Date': 22}
+
+print mydict
+print type(mydict)
+
+# How to extract anyof those
+print "getting the Year: ", mydict['Year']
+print "getting the Month: ",mydict['Month']
+print "getting the Date: ",mydict['Date']
+
+# Adding the new KV
+mydict['Time'] = 13.00
+print "After adding time: ", mydict
+
+# Changing the values
+mydict['Time'] = 13.35
+print "After changing the time: ", mydict
+
+print "Printing all the Keys: ", mydict.keys()
+print "Printing all the Values: ", mydict.values()
+
+# Deleting the KV pair
+del mydict['Time']
+print "After deleting the TIME: ", mydict
+
+# Iterate them
+# Iteritem in build python capability
+for k,v in mydict.iteritems():
+  print k, v
+
+# Multiple values for single Key
+# Basiaclly 1-to-Many Relationship
+
+values = [1, 2, 3, 4]
+
+mydict['nums'] = values
+
+print "With Multiple Values Dict: ", mydict
+
+# Iterate them again
+for k,v in mydict.iteritems():
+  print k, v
+```
