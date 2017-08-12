@@ -1181,3 +1181,158 @@ $ python
 ***IMPORTANT NOTICE***
 - When you `import` a module it uses totally different namespace from actual main program that you wrote
 - For exmple, after `import sys`  the `sys.path` & `path` are totally different, so you no need to worry about the overlapping
+
+**SHUTIL**
+
+Shell Utilities
+
+- This is further discussion about the FileIO utilization
+- why we shoud be shutils for copy a file? because its cross platform
+
+Copying the a file
+
+```python
+#!/usr/bin/python
+
+import shutil
+
+#You can do this also
+# s = shutil
+# s.copy("file1", "file2")
+
+
+# It created new file with NEW timestamp (current time stamp)
+shutil.copy("file1", "files2")
+
+# Below crates the NEW file with same timestamp as original file
+shutil.copy2("file1", "file3")
+
+# This is moving the file
+shutil.move("file2", "/tmp/")
+
+# Copy tree function
+# It copies the content in recursively
+src = "temp"
+dst = "temp2"
+
+shutil.copytree(src, dst)
+```
+
+- There is pretty cool feature about `copytree` is that it accepts the `BOLEAN` values as `0` or `1` in arg area
+  - If it 1, then it copies the SYM link from the source to dst
+  - if its 0, then it copies the actual file where SYM link associated (but for the naming convention it keeps the SYM link file name for the actual file)
+
+- In order prove the above refer the below, make sure you have symlink in the "temp" dir, & remove if there any "temp2" directory
+
+```python
+#!/usr/bin/python
+
+src = "temp"
+dst = "temp2"
+
+# 0 - Copies the actual file where the symlink pointed
+shutil.copytree(src, dst, 0)
+```
+
+- In order to remove the directory tree you can use `rmtree`
+  - It has the option `ignore_error` - where it accepts the values as BOOLEAN & ignore in case any error while removing the directory tree
+  - `onerror` - is an another option. Not sure for what ?
+
+```python
+#!/usr/bin/python
+import shutil
+
+dst = "temp2"
+
+shutil.rmtree(dst)
+```
+
+- Below code for the move the file
+- likewise the is `movetree` you can check the reference page for more information
+
+```python
+#!/usr/bin/python
+import shutil
+
+src = "file3"
+dst = "temp"
+
+shutil.move(src, dst)
+```
+
+
+**Regular Expressions I**
+
+- By default regex not inclueded in the Python core, so we have to import like `import re`
+- From interactive shell you can do the following,
+
+```bash
+  $ python
+  >>> import re
+  >>> dir (re)
+```
+
+- Worst case of "realized" - If you want to use any function from the imported module, you have to use the module name as the prefix so,
+
+```python
+  import re
+  re.blah(blah)
+```
+
+- In order to perform the match in Python,
+  - 1st you have compile the regrex (im bit doubtful)
+  - 2nd you have run the "Match" against the complied item
+  - Refer the below interactive shell code
+
+  ```python
+      >>> import re
+      >>> reg1 = re.compile('itsamatch')
+      >>> reg1.match('itsamatch')
+  ```
+  - `group()` sub method, which is used to return the match
+      
+      ```python
+      >>> print reg1.match('itsamatch').group()
+      ```
+
+  - Try for non match
+      ```python
+      >>> print reg1.match('it')
+      None
+      >>> print reg1.match('itamatc')
+      None
+      ```
+
+- Its Regex, ofcourse it's case sensitive
+- `\` used for escaping the special character in the Regex
+- Instead of variable in the `.match()` function, refer the below code for variable substitute
+      
+      ```python
+      >>> content = re.compile('matchme')
+      >>> regex1 = content.match('matchme')
+      >>> print regex1
+      <_sre.SRE_Match object at 0x100ba1a58>
+      >>> print regex1.group()
+      matchme
+      ```
+
+Made small script from the above understandings
+
+```python
+#!/usr/bin/python
+
+import re
+
+# This is verbatim string based search
+reg1 = re.compile('Hola')
+match1 = reg1.match('Hola')
+print "From example-1"
+print match1.group()
+
+# This example based on the VARIABLE used for storing the search string
+reg2 = re.compile('Gracias')
+searchstring = "Gracias"
+match2 = reg2.match(searchstring)
+print "From example-2"
+print match2.group()
+```
