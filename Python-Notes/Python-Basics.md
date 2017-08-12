@@ -600,14 +600,14 @@ for k,v in mydict.iteritems():
 **Conditional I**
 
 Conditional Operations/Operator
-  - < (less than)
-  - <= (less than or equal to)
-  - > (Greater than)
-  - >= (Greater than equal)
-  - ==  (Equals to)
-  - != / <>  (Not Equal to)
+- `<` less than
+- `<=` less than or equal to
+- `>` (Greater than)
+- `>=` (Greater than equal)
+- `==`  (Equals to)
+- `!=` or `<>`  (Not Equal to)
 
-Note: I just came to know about declaring the var/values in the same line
+***Note:*** I just came to know about declaring the var/values in the same line
 
 ```python
 #!/usr/bin/python
@@ -773,3 +773,220 @@ while my_num != guess_num:
 ```
 
 ***Note:*** From the above first it will ask for "4" times, but when you say "no" to exit, it will only asks "3" times. This scenario will be explained later
+
+**File I/O I**
+
+- In python if you open a file, the file handlers gonna run IN-MEMORY
+- Just any other language its does all things with python
+
+- Modes that are available
+  `r` - read
+  `rb` - read binary
+  `w` - write
+  `wb` - write binary
+  `r+` - read and write
+
+- below code, doesn't have try/error handling mechanism
+- Check the document page, basically each mode has its own may function
+
+- Ex: 
+  - `r` - has `readline()` - Where used to read the line by line (in a string)
+  - `readline()` returns the very first line ("first char" to breaking of the line "\n") & stored in string
+  - `read()` reads entire file stored as one string
+  - `read(12)` only reads the till 1st to 12 character in the file (count start from 1 not zero)
+  - `readlines()` its is literal, its prints out everything (including the line breaks)
+
+***Learned:**
+- If readline() & read() are in the same script, which left by readline() returned in the read() function.
+i.e if file has 10 line, 1 st line goes by readline(), and the read 9 lines returned by read( )
+
+- Same goes for every other method, how to avoid ? - before using any other read method you should close the file
+
+***Note:***
+read() - bit dangerous if your file is very large, chances it may exhaust your memory
+
+```python
+#!/usr/bin/python
+
+# Opening a file in READ mode
+handler1 = open("myfile.txt", "r")
+
+# Just prints the file descriptor/handler information
+print handler1
+
+# Or even you can assign into variable
+#print handler1.readline()
+
+firstline = handler1.readline()
+print type(firstline)
+print firstline
+
+# Reading the entire file
+whole_content = handler1.read()
+print type(whole_content)
+print whole_content
+
+# Reading the specific line
+print "Reading the 3rd line only"
+spec_line = handler1.read(3)
+print "3rd line: ", spec_line
+
+
+# Using the readlines()
+everything = handler1.readlines()
+print "Here we are printing everything by using the readlines()", everything
+```
+
+**File I/O II**
+
+- Here we will be using 2 handlers for both "Read" & "Write" operation
+- Just came to know Write line function doesn't insert the NEW line ("\n"). Yes, its so if you are copying any content to an another file it gonna be same as original
+- when ever do any operation on the file you have to "CLOSE", if its missed sometimes changes wont take effect
+- Reading from one file & writing it to another files then use readlines(), cuz we required trailing new lines to print it as a original so the combination is readlines() & writelines()
+
+```python
+#!/usr/bin/python
+
+# Here file names can be variablized, if you require
+hand1 = open("data1", "r")
+hand2 = open("data2", "w")
+
+val1 = hand1.readlines()
+
+#for i in val1:
+#  hand2.write(i)
+
+# Avoid the loop to write the content
+# It takes care of the looping the content
+hand2.writelines(val1)
+
+# Close the file handlers
+hand1.close()
+hand2.close()
+```
+
+**File I/O III**
+Here we are going to prompt the user to enter the files name/location - Nothing fancy
+
+- some "append" based operation
+  - `a` Append mode - incase the target file is not available then it creates, If its available just does the append
+
+If you run the blow multiple time you can see that "data3" file would have been grown by append operation like by concatinations
+
+```python
+#!/usr/bin/python
+
+hand1 = open("data1", "r")
+hand2 = open("data3", "a")
+
+val1 = hand1.readlines()
+hand2.writelines(val1)
+
+hand1.close()
+hand2.close()
+```
+
+- Working with "r+" (aka Read and Write)
+
+  - If you var/val to APPEND/write there wont be any newline char
+  - If you readlines() there is proper "Trailing" new line character
+
+```python
+#!/usr/bin/python
+
+# Reading and Writing it to the same file
+
+hand1 = open("rdwrite.txt", "r+")
+
+val1 = hand1.readlines()
+print val1
+
+#val2 = "Yo Yo"
+val2 = hand1.readlines()
+
+hand1.writelines(val2)
+
+hand1.close()
+```
+
+**File I/O IV**
+
+- Basically content handled in FILE I/O was `String`, Especially in `write()` operation
+- So variable has integer values `(val = 3)` & you are trying to write it into another file by using `write()` it will fail.
+- Because write consider the input as `STRING`, but we actually passed the `INT`
+- Also it consider it has a `Tuple`, so Tuples are immutable
+
+- Refer the below code, if you tries execute it will fail !
+
+```python
+#!/usr/bin/python
+hand1 = ("rdwrite.txt", "w")
+
+myvar = 34
+mystr = "String"
+myint = 56
+
+hand1.write(mystr,myvar,myint)
+
+hand1.close()
+```
+
+- So in-order to fix the above code we have to use the `Formatter` by adding the `%`
+  - Types of formatter
+    - `%s` - string
+    - `%d` - integer
+    - `%f` - float
+
+So refer the below code fixed code
+
+```python
+#!/usr/bin/python
+hand1 = ("rdwrite.txt", "w")
+
+mystr = "String"
+myvar = 34
+myint = 56
+
+hand1.write("%s %d %d" % (mystr,myvar,myint))
+
+hand1.close()
+```
+
+- Above fixcode is not working in mycase (with python 2.7)
+
+- Another sample code to increent and store it
+
+```python
+#!/usr/bin/python
+hand1 = ("rdwrite.txt", "w")
+
+myvar = 34
+mystr = "String"
+myint = 56
+
+while myint < 100:
+  hand1.write("%s %d %d" % (mystr,myvar,myint))
+  myvar = myvar + 1
+  myint = myint + 1
+
+hand1.close()
+```
+
+- Another example with FLOAT (print only 2more num after the dot)
+
+```python
+#!/usr/bin/python
+hand1 = ("rdwrite.txt", "w")
+
+myvar = 34.50
+mystr = "String"
+myint = 56
+
+while myint <= 100:
+# %2f say that print only 2 digit after the dot (like 33.20, not 33.234334)
+  hand1.write("%s %.2f %d" % (mystr,myvar,myint))
+  myvar = myvar + 1
+  myint = myint + 1
+
+hand1.close()
+```
