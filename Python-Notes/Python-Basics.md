@@ -1106,3 +1106,78 @@ while 1:
 print "Will be moving on..."
 print hand1.readline()
 ```
+
+**Functions**
+- Function does kind of mask/encapsulation to the code
+- Use decent name for the function which is not supposed to be clash with build-in calls/functions
+- Its ultimately based on the INTENDATION
+- Anything declared in-side the function block is only accessed by `function` not by out-side of the program as mentioned in the others
+- Just like in BASH you have call the function some where in the main program to execute, else it returns NOTHING
+- Once after the function declaration only we have to call the function, else you it get error. So define function & call it
+
+```bash
+$ python
+>>> help()
+help > keywords
+```
+
+Below code will not print anything
+
+```python
+#!/usr/bin/python
+
+def hword():
+  print "Hi There"
+
+hword()
+```
+
+Author functioned the life expectency program, lets do some small math
+
+```python
+#!/usr/bin/python
+
+print "Lets do some math"
+
+num1 = input("Enter the 1st Number: ")
+num2 = input("Enter the 2nd Number: ")
+
+def mymath(n1, n2):
+  added = n1 + n2
+  return added
+
+value = mymath(num1, num2)
+
+answer = input("What could be the addition of them ?: ")
+
+if answer != value:
+  print "You Dump as b**th"
+else:
+  print "Alright, its very easy anyway"
+```
+
+**Modules**
+- How to load module? by using `import <module_name>`
+- How get anyother functions of loaded modules, by using `dir (mod_name)`
+- multiple values of any function stored in list, no TUPLEs `(>>> sys.path)`
+
+- From the modules directory, you get the *.py ascii code of the modules
+  - *.pyc - is the bit code compiles version of *.py files, when you say "import.sys" this is files been used for the faster execution (not sure check the internet)
+
+- You can `import` only required function in the module, instead importing the complete modules
+- like `from sys import path`
+
+```bash
+$ python
+>>> import sys
+>>> dir(sys)
+>>> print sys.platform
+>>> print sys.path
+```
+
+  - From the above example `sys.path` returns the all available path where python library is store
+  - You can add you custom path also by update the `PYTHONPATH` shell environment variable, so which is included in `path`
+
+***IMPORTANT NOTICE***
+- When you `import` a module it uses totally different namespace from actual main program that you wrote
+- For exmple, after `import sys`  the `sys.path` & `path` are totally different, so you no need to worry about the overlapping
