@@ -796,7 +796,7 @@ while my_num != guess_num:
   - `read(12)` only reads the till 1st to 12 character in the file (count start from 1 not zero)
   - `readlines()` its is literal, its prints out everything (including the line breaks)
 
-***Learned:**
+***Learned:***
 - If readline() & read() are in the same script, which left by readline() returned in the read() function.
 i.e if file has 10 line, 1 st line goes by readline(), and the read 9 lines returned by read( )
 
@@ -989,4 +989,120 @@ while myint <= 100:
   myint = myint + 1
 
 hand1.close()
+```
+
+**Exceptions I & II**
+
+- It can used to print pretty decent error info when failure, instead of Generic Python error msg
+- Basic demo on try & except
+- After try: and except "indentation" is must
+
+Simple script to ask the file name
+
+```python
+#!/usr/bin/python
+
+f1 = raw_input("Enter the File location: ")
+
+try:
+  hand1 = open(f1, "r")
+except:
+  print "Problem opening file name called: ", f1
+
+print "Will be moving on..."
+print hand1.readline()
+```
+
+Example with the never ending loop (for me below notbreaking after entering the right filename also)
+
+```python
+#!/usr/bin/python
+while 1:
+  f1 = raw_input("Enter the File location: ")
+  try:
+    hand1 = open(f1, "r")
+  except:
+    print "Problem opening file name called: ", f1
+
+
+print "Will be moving on..."
+print hand1.readline()
+```
+
+Here is the example of `BREAK` with the never ending script
+
+```python
+#!/usr/bin/python
+while 1:
+  f1 = raw_input("Enter the File location: ")
+  try:
+    hand1 = open(f1, "r")
+    break
+  except:
+    print "Problem opening file name called: ", f1
+
+
+print "Will be moving on..."
+print hand1.readline()
+```
+
+Instead of infinite lets give based on Count, with support of `if` conditional
+
+```python
+#!/usr/bin/python
+import sys
+
+count = 1
+
+while 1:
+# Staring the if block
+  if count == 3:
+    answer = raw_input("Reached max chances, would you like to Continue (yes/No): ")
+    if answer == "yes":
+      sys.exeit()
+    else:
+      count = 0
+
+  f1 = raw_input("Enter the File location: ")
+  try:
+    hand1 = open(f1, "r")
+    break
+  except:
+    print "Problem opening file name called: ", f1
+  count = count + 1
+
+print "Will be moving on..."
+print hand1.readline()
+```
+
+There is an another example with `string.lower`, converting user input to lower case the perform the file based operation
+
+```python
+#!/usr/bin/python
+import sys
+import string
+
+count = 1
+
+while 1:
+# Staring the if block
+  if count == 3:
+    answer = raw_input("Reached max chances, would you like to Continue (yes/No): ")
+    if answer == "yes":
+      sys.exeit()
+    else:
+      count = 0
+
+  f1 = raw_input("Enter the File location: ")
+  try:
+    f1 = string.lower(f1)
+    print f1
+    hand1 = open(f1, "r")
+    break
+  except:
+    print "Problem opening file name called: ", f1
+  count = count + 1
+
+print "Will be moving on..."
+print hand1.readline()
 ```
