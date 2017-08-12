@@ -1266,18 +1266,18 @@ shutil.move(src, dst)
 - By default regex not inclueded in the Python core, so we have to import like `import re`
 - From interactive shell you can do the following,
 
-```bash
+  ```bash
   $ python
   >>> import re
   >>> dir (re)
-```
+  ```
 
 - Worst case of "realized" - If you want to use any function from the imported module, you have to use the module name as the prefix so,
 
-```python
+  ```python
   import re
   re.blah(blah)
-```
+  ```
 
 - In order to perform the match in Python,
   - 1st you have compile the regrex (im bit doubtful)
@@ -1336,3 +1336,853 @@ match2 = reg2.match(searchstring)
 print "From example-2"
 print match2.group()
 ```
+
+**Regular Expressions II & III**
+
+- Will see how to "Ignore" the case sensitive, You can ignore as mentioned in the below, [dont mess around "re.IGNORECASE" keep as it is]
+  ```python
+  >>> reg1 = re.compile('itsamatch', re.IGNORECASE)
+  ```
+
+- Lets try below example to demonstrate
+  ```python
+  >>> import re
+  >>> reg1 = re.compile('complicated', re.IGNORECASE)
+  >>> match1= reg1.match('CoMpLiCaTeD')
+  >>> print match1.group()
+  CoMpLiCaTeD
+  ```
+
+- With `^`
+  - This carrot sign which allows us to search & returns the thing which is `STARTS` with a specific char/word
+  - Refer the below code
+    ```python
+    >>> import re
+    >>> searchstring = "This is a test"
+    >>> reg1 = re.compile('^T')
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    ```
+
+- In order to get the char ending with you can use the `$` symbol, please refer the below code [I Dont understand this shit]
+  ```python
+  >>> import re
+  >>> searchstring = "This is a test"
+  >>> reg1 = re.compile('T$')
+  >>> match1 = reg1.match(searchstring)
+  >>> print match1.group()
+  ```
+
+- TIL `.` used to print the any character except the new-line `\n` character separator (it depends on how many times dots are prensented)
+
+- If you want to print/match everything, you have use the match both `.` & `*`
+  - `.*`
+    - `.` prints very first char, regardless of whatever it is!
+    - `*` print anything matches (else it repeats the . for inifite times - im not sure at this point) (it literally means)
+
+***Notes:*** This combination doesn't work for multiple lines, you have to use the `re.DOTALL` sub-function with it
+
+- For the above scenario please refer the below sample code
+
+  ```python
+  >>> import re
+  >>> searchstring = "This is a test"
+  >>> reg1 = re.compile('.*')
+  >>> match1 = reg1.match(searchstring)
+  >>> print match1.group()
+  ```
+
+- For the multiple line & `re.DOTALL` combination
+  ```python
+  >>> import re
+  >>> searchstring = "This is a test\nAnd this another test line"
+  >>> reg1 = re.compile('.*', re.DOTALL)
+  >>> match1 = reg1.match(searchstring)
+  >>> print match1.group()
+  ```
+
+- There are special meta character `^, ., *, +, ?`
+  - `^` -> Starting with
+  - `.` -> Match any char at only once
+  - `*` -> Infinite match for any char
+  - `+` -> Incremental match for specific char, breaks when NEW char found
+  - `?` -> search the match ONE or zero time
+
+- Also you can print the `RANGEs` as mentioned in the below
+
+  `[a-z]` - Prints only 1 char, which matched the range
+
+  `[a-z]+` = Prints 1 to Many the supplied char matched, breaks if its didn't find anything in range
+  - Refer the below example: just to print the range
+    
+    ```python
+    >>> import re
+    >>> searchstring = "this is a test"
+    >>> reg1 = re.compile('[a-z]')         # This is just range
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    t
+    >>> reg1 = re.compile('[a-z]+')        # Range with continue (breaks when it finds the "SPACE" character)
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this
+    >>> reg1 = re.compile('[a-z]+.*')      # We are accepting even the SPACW with "." + printing everything with "*"
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this is a test
+    ```
+
+- In order to get/evaulate the get space you can try the following
+    ```python
+    >>> reg1 = re.compile('[a-z]+\s')      # \s goes for the space
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this
+    ```
+
+- `\s` is goes to find the space and give resul accordingly. But when you want to keep `\` as also a part regex you have mention it has `raw` (you may required this). simply prefix -ing the "r", which stands for the "raw notation"
+
+    ```python
+    >>> reg1 = re.compile(r'[a-z]+\s')
+    ```
+
+- One more example to print only one more character next to the space
+    
+    ```python
+    >>> reg1 = re.compile('[a-z]+\s[a-z]')      # \s goes for the space with 1 char
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this i
+
+    >>> searchstring = "awesome right you"
+    >>> reg1 = re.compile('[a-z]+\s[a-z]+')      # \s goes for the space with 1 or more char
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    awesome right
+
+    >>> searchstring = "this is a test"                         # In this example we are trying to print everything
+    >>> reg1 = re.compile('[a-z]+\s[a-z]+\s[a-z]\s[a-z]+')      # Adjusting as per out search string
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this is a test
+
+***Note:*** regex are case sensitive default, unless you dont specify the IGNORE the case sensitive
+
+- Going through with the CAPS letter
+    ```python  
+    >>> searchstring = "this is a TEST"
+    >>> reg1 = re.compile('[a-z]+\s[a-z]+\s[a-z]\s[A-Z]+')      # [A-Z] did for the CAPS
+    # Also you can use the IGNORECASE
+    # reg1 = re.compile('[a-z]+\s[a-z]+\s[a-z]\s[a-z]+', re.IGNORECASE)
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this is a TEST
+    ```
+
+- Going with through the NUMERIC
+    ```python
+    >>> searchstring = "this is a 2017"
+    >>> reg1 = re.compile('[a-z]+\s[a-z]+\s[a-z]\s[0-9]+')      # [0-9] did for the NUMERIC part
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this is a 2017
+    ```
+
+***Note:***
+We can use the extended notation to get this things done as seen previous example - matching all words & numeric.
+Just like space notation `\s`, we cause for word as `\w` & digit has `\d` and more.
+
+- Refer the below code for "\d" example
+    ```python
+    >>> searchstring = "this is a 2017"
+    >>> reg1 = re.compile('[a-z]+\s[a-z]+\s[a-z]\s\d+')      # \d+ did for the NUMERIC part
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this is a 2017
+    ```
+
+**Regular Expressions IV**
+
+- There is something called `literal` search (refer the below code)
+  ```python
+  >>> reg1 = re.compile('[a-z] pid \d+')
+  ```
+  - In the above `pid` and `Space` bar are literal search we did user `[a-z]` & `\s` to denote them
+
+- Here we are re-writing the word search by using the `\w` (`\w+` 1 or more possibility it finds)
+  - `\w` (word) covers the following in its search,
+    `a-z`, `A-Z`, `_`, `0-9`
+
+- Lets rewrite the above examples bit,
+    ```python
+    >>> searchstring = "this is a test"
+    >>> reg1 = re.compile('\w+\s\w+\s\w?\s\w+')
+    >>> match1 = reg1.match(searchstring)
+    >>> print match1.group()
+    this is a 2017
+    ```
+
+**Regular Expressions V**
+
+- Writing the script for the above scenario(s) we come across
+
+```python
+#!/usr/bin/python
+import re
+
+reg1 = re.compile('hello', re.IGNORECASE) # Matching Verbatim
+searchstring = raw_input("Wassup Dog: ")
+match1 = reg1.match(searchstring)
+
+if match1:
+  print "Yo we got match: ", match1.group()
+else:
+  print "Oops, No Match"
+```
+
+- Another code use the same above except "reg1"
+
+```python
+reg1 = re.compile('\d+', re.IGNORECASE)
+```
+
+***Output:**
+```bash
+~/tmp/Python-Tut/RegEx>_ ./regex-3.py
+Going through DIGIT based search
+Wassup Dog: 123Dog
+Yo we got match:  123
+
+~/tmp/Python-Tut/RegEx>_ ./regex-3.py
+Going through DIGIT based search
+Wassup Dog: 123 Dog
+Yo we got match:  123
+```
+
+***Note:** As per regex we have speified int he "reg1", ot  goes and finds 1 or more digits and breaks if its no Digits in provided input
+
+- Another example for "Digit" "Space" & "Words" as well
+
+```python
+reg1 = re.compile('\d+\s+\w+', re.IGNORECASE)
+```
+
+- Another script with "Chances" (just by giving the 3 chances)
+
+```python
+#!/usr/bin/env python
+import re
+import sys
+
+reg1 = re.compile('\d+\s+\w+', re.IGNORECASE)
+
+c = 1
+t = 3
+print "You got only", t,"chances :"
+while c<=t:
+  searchstring = raw_input("Waddup, Dog: ")
+  match1 = reg1.match(searchstring)
+
+  if match1:
+    print "You have got matches: ", match1.group()
+    print "So exiting out"
+    sys.exit()
+  else:
+    print c, "chance is gone"
+    c = c + 1
+```
+
+**Regular Expressions VI & VII**
+
+- Scaling out the above script
+- Since all case/example we have seen searching BGINNING of the string ! There is no examples shown to search middle of string (right?) all beacuse we have used the `match` function call `re.match`
+
+- In order to search the pattern anywhere we have to use the `search` call `re.search`
+
+- Refer the simple example
+  
+  ```python
+  >>> import python
+  >>> searchstring = " This 2017 yo"
+  >>> reg1 = re.compile('\d+')
+  >>> search1 = reg.search(searchstring)
+  >>> print search1
+  >>> print search1.group()
+  ```
+
+Comparison between match/search
+
+```python
+#!/usr/bin/env python
+import re
+import sys
+
+reg1 = re.compile('\d+\s+\w+', re.IGNORECASE)
+reg2 = re.compile('\d+')
+
+c = 1
+t = 3
+print "You got only", t,"chances :"
+while c<=t:
+  searchstring = raw_input("Waddup, Dog: ")
+  match1 = reg1.match(searchstring)
+  search1 = reg2.search(searchstring)
+
+  if match1:
+    print "You have got matches: ", match1.group()
+  else:
+    print "No Match found"
+  if search1:
+    print "you have got SEARCH: ", search1.group()
+  else:
+    print "No SEARCH found"
+  c = c + 1
+```
+
+- Another example with findall
+- Reason is `re.search` goes find sequence of digit, if there no-digit values it breaks immediately & then there is DIGIT it can't pickup
+- For instance if the search string is `You its 2017 and 2132`, its only picks the `2017`, but can't pickup the `2132`
+
+***Note:*** Find all doesn't required group, cuz by nature its output format LIST
+
+```python
+#!/usr/bin/env python
+import re
+import sys
+
+reg1 = re.compile('\d+\s+\w+', re.IGNORECASE)
+reg2 = re.compile('\d+')
+
+c = 1
+t = 3
+print "You got only", t,"chances :"
+while c<=t:
+  searchstring = raw_input("Waddup, Dog: ")
+  match1 = reg1.match(searchstring)
+  search1 = reg2.search(searchstring)
+  findall1 = reg2.findall(searchstring)
+
+  if match1:
+    print "You have got matches: ", match1.group()
+  else:
+    print "No Match found"
+  if search1:
+    print "you have got SEARCH: ", search1.group()
+  else:
+    print "No SEARCH found"
+  if findall1:
+    print "from Findall: ", findall1  # Find all doesn't required group, cuz by nature its output format LIST
+  else:
+    print "Nothing from FINDALL"
+  c = c + 1
+```
+
+- Will going through an another example with `re.finditer`
+- `finditer` items should looped (These especially designed looping the items), without loopoing the "fintiter" values are non-useable
+
+```
+#!/usr/bin/env python
+import re
+import sys
+
+reg1 = re.compile('\d+\s+\w+', re.IGNORECASE)
+reg2 = re.compile('\d+')
+
+c = 1
+t = 3
+print "You got only", t,"chances :"
+while c<=t:
+  searchstring = raw_input("Waddup, Dog: ")
+  match1 = reg1.match(searchstring)
+  search1 = reg2.search(searchstring)
+  findall1 = reg2.findall(searchstring)
+  finditer1 = reg2.finditer(searchstring)
+
+  if match1:
+    print "You have got matches: ", match1.group()
+  else:
+    print "No Match found"
+  if search1:
+    print "you have got SEARCH: ", search1.group()
+  else:
+    print "No SEARCH found"
+  if findall1:
+    print "from Findall: ", findall1
+  else:
+    print "Nothing from FINDALL"
+  if finditer1:
+    print "Printing the item in FINDITER"
+    for i in finditer1:
+      print i.group()
+  else:
+    print "Nothing on FindIter"
+  c = c + 1
+```
+
+**Regular Expression VIII**
+
+- Will sending new compile format to search the e-mail address
+- Following can be used
+  ```python
+  re.compile(.*@.*) # This is simplest form
+  re.compile(\w+#.*) # Another form
+  ```
+- Refer the sample code the example
+***Note:*** This code doesn't pickup the `first.secondname@domain.net` like address, since `.` is not evaluated in the regex
+- A simple mail-id will work, like `myname@mydomain.com`
+
+```python
+#!/usr/bin/env python
+import re
+import sys
+
+reg1 = re.compile('\w+@.*')
+
+c = 1
+t = 3
+print "You got only", t,"chances :"
+while c<=t:
+  searchstring = raw_input("Wuddup, Dog: ")
+  match1 = reg1.match(searchstring)
+
+  if match1:
+    print "Got the mail address: ", match1.group()
+  else:
+    print "No E-Mail id"
+
+  c = c + 1
+```
+
+***Note:*** If you want to search for literal char `.` use `\.` in the regex
+
+- So in-order to get the pattern like `first.secondname@domain.net` use the below regex
+- Still there is an issue with this script
+  - Incase if you input as `my email id is name@domain.com` - it will output as `my email id is name@domain.com`
+  - Which we don't want, check for next example for the fix
+
+```python
+#!/usr/bin/env python
+import re
+import sys
+
+reg1 = re.compile('.*@.*')
+
+c = 1
+t = 3
+print "You got only", t,"chances :"
+while c<=t:
+  searchstring = raw_input("Wuddup, Dog: ")
+  match1 = reg1.match(searchstring)
+
+  if match1:
+    print "Got the mail address: ", match1.group()
+  else:
+    print "No E-Mail id"
+
+  c = c + 1
+```
+
+- So if you want to avoid output like = `my email id is name@domain.com`
+- Below code is not working (i dont know why)
+
+```python
+#!/usr/bin/env python
+import re
+import sys
+
+reg1 = re.compile('\s+\w+@.*')
+
+c = 1
+t = 3
+print "You got only", t,"chances :"
+while c<=t:
+  searchstring = raw_input("Wuddup, Dog: ")
+  match1 = reg1.match(searchstring)
+
+  if match1:
+    print "Got the mail address: ", match1.group()
+  else:
+    print "No E-Mail id"
+
+  c = c + 1
+```
+
+**Regular Expressions IX & X**
+
+- Will be working with the files
+- Find the below code simply match/search/findall/finditem for given condition
+
+```python
+#!/usr/bin/python
+
+import re
+
+reg1 = re.compile('\d+')
+
+hand1 = open("datafile", "r")
+
+for searchstring in hand1.readlines():
+  match1 = reg1.match(searchstring)
+  search1 = reg1.search(searchstring)
+  findall1 = reg1.findall(searchstring)
+  finditer1 = reg1.finditer(searchstring)
+
+  if match1:
+    print "from MATCH: ", match1.group()
+  else:
+    print "Nothing from MATCH"
+  if search1:
+    print "from SEARCH: ", search1.group()
+  else:
+    print "Nothing from SEARCH"
+  if findall1:
+    print "from FINDALL: ", findall1
+  else:
+    print "Nothing from FINDALL: "
+  if finditer1:
+    print "from FINDITER: "
+    for i in finditer1:
+      print i.group()
+  else:
+    print "Nothing from FINDITER"
+```
+
+- Using the above script with FILE handlers
+
+```python
+#!/usr/bin/python
+
+import re
+
+filename = "/var/log/system.log"
+
+reg1 = re.compile('\d+')
+
+hand1 = open(filename, "r")
+
+for searchstring in hand1.readlines():
+  match1 = reg1.match(searchstring)
+  search1 = reg1.search(searchstring)
+  findall1 = reg1.findall(searchstring)
+  finditer1 = reg1.finditer(searchstring)
+
+  if match1:
+    print "from MATCH: ", match1.group()
+  else:
+    print "Nothing from MATCH"
+  if search1:
+    print "from SEARCH: ", search1.group()
+  else:
+    print "Nothing from SEARCH"
+  if findall1:
+    print "from FINDALL: ", findall1
+  else:
+    print "Nothing from FINDALL: "
+  if finditer1:
+    print "from FINDITER: "
+    for i in finditer1:
+      print i.group()
+  else:
+    print "Nothing from FINDITER"
+```
+
+- As of now we are doing just search/match/find(all/iter), How about search and repalce ?
+- There is sub-function call `re.sub()` for that
+  - The feature with `sub()`, is `count` which is allows you to perform the limits of substitute in HORIZONDALLY
+  - Which means that in each if the actuall finds 4~5 occurance, if count set to `1` then it replaces only one OCCURANCE (as per count=1)
+  - So If there is NO count specified, it changes every single occurance
+
+```python
+#!/usr/bin/python
+import re
+
+reg1 = re.compile('\d+')
+
+filename = "data1"
+
+hand1 = open(filename, "r")
+
+for searchstring in hand1.readlines():
+  print reg1.sub("2016", searchstring)
+  # IF you want to limit the SUB
+  # print reg1.sub("2016", searchstring, count=1)
+
+hand1.close()
+```
+
+- Above code so far Displays the SUBS change but didn't write to anyfiles.
+  - Let open another file handlers & write the content to it
+  - Refer the below code for the same
+
+```python
+#!/usr/bin/python
+import re
+
+reg1 = re.compile('\d+')
+
+filename = "data1"
+filename2 = "sub_data"
+
+hand1 = open(filename, "r")
+hand2 = open(filename2, "w")
+for searchstring in hand1.readlines():
+  subs = reg1.sub("2016", searchstring, count=1)
+  hand2.writelines(subs)
+
+hand1.close()
+hand2.close()
+```
+
+- Here is another example to mask the email ids
+
+```python
+#!/usr/bin/python
+import re
+
+reg1 = re.compile('\w+@.*')
+
+org = "email-id.org"
+dup = "email-id.mask"
+
+hand1 = open(org, "r")
+hand2 = open(dup, "w")
+
+for searchstring in hand1.readlines():
+  mask_is = reg1.sub("dummy@domain.local", searchstring)
+  hand2.writelines(mask_is)
+```
+
+**Syslog Integration I**
+
+- Python has capability of logging info into `SYSLOG` (from level 7 to 0)
+- To create any log object you have to initiate the `logger` object with `getLogger` sub method `logger = logging.getLogger()`
+- Additionally this module has the `FileHandler` sub method, so we no need to user any other Filehandler from the another module
+
+A simple model works like this
+
+```
+Model
+(Object)Logger --> Handler --> Destination
+```
+
+- We are creating the Object for logger.
+  - Logger sends the content/log to handler.
+    - Handler sends loginfo/msg to the Destination
+      (Destination can be Syslog/TCP/UDP/File & Etc)
+
+- Please refer the below sampl code
+
+```python
+#!/usr/bin/python
+import logging
+
+# Definition & Instantiation of logger object
+logger = logging.getLogger()
+
+# Definition of the Handler
+# Here the default is "Append" mode, which means the below code same as un-commented
+# hand1 = logging.FileHandler('my_log.log', 'a')
+hand1 = logging.FileHandler('my_log.log')
+
+# Definition of Log content format
+format = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hand1.setFormatter(format)
+
+# Add handler to logger
+logger.addHandler(hand1)
+
+# Invocation of logger
+logmessage = "This is Test log message"
+logger.error(logmessage)
+```
+
+- By default `logger` default mode is `append`, which means that if you run the above scipt multiple times the log content get appeneded
+- If you dont want "append" as defult, then specify required method
+
+**Syslog Integration II**
+
+- Here we are modifying the script to log content to syslog file itself
+- `import logging` support only 2 handlers, which is `Stream/File`, but in-order to log the information to syslog file you have import some other handlers as well
+- Refer the below sample code for more information
+- There is no limit for using file related handlers, we can append the content into many files by nature. Means that one logger and multiple handlers
+
+- From the below example code we did specify the any log file name to log the message for `SysLogHandler()`
+  - which is `hand2 = logging.handlers.SysLogHandler()`
+
+- We can configure the `SYSLOG` daemon incase of any log info from the user to `SysLogHandler()` then appent to an any specfic file (/var/log/custom.log)
+  - For that you have to update following line in `/etc/syslog.conf` file
+  ```
+  "user.*         /var/log/custom.log"
+  ```
+
+    - `user` - means from any user from the system
+    - `*`    - all kind of severity (like ERROR, INFO, EMER, DEBUG and others)
+    - `/var/log/custom.log` - where all msg from the user should be stored
+  - restart the SYSLOG daemon `service syslog restart`
+
+```python
+#!/usr/bin/python
+
+import logging
+import logging.handlers
+
+logger = logging.getLogger()
+
+hand1 = logging.FileHandler('my_log.log')
+hand2 = logging.handlers.SysLogHandler()
+
+format = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hand1.setFormatter(format)
+hand2.setFormatter(format)
+
+logger.addHandler(hand1)
+logger.addHandler(hand2)
+
+logmessage = "This is Test log message"
+logger.error(logmessage)
+```
+
+***Notes:***
+- Syslog opens the UDP port `514`, so we can use that port send message to Syslog
+- If there is no proper ROUTE in the `/etc/syslog.conf` by all messages sends/route to the `/var/log/messsage`
+- If we used `SysLogHandler()` by default it prefix `Date/Time Stamp, hostname` like things
+
+In latest system, it gonna be `rsyslog`, so thinking that steps on the OS gonna be different.
+
+**CGI I**
+
+[Common Gateway Interface]
+
+- Typically all content stays in `/var/www/cgi-bin`
+- If you want more configuration detail `grep -i -ne cgi /etc/httpd/conf/httpd.conf`
+
+- Writing the simple "helloworld.py" cgi script
+
+```python
+#!/usr/bin/python
+
+print "Content-type: text/html"
+print
+
+print "<html>"
+print "<title>From Py</title>"
+print "<body>"
+print "<h1><strong><font face='Monaco' size='+2'>Hi There !!!</font></strong></h1>"
+print "</body>"
+print "</html>"
+```
+Make it executable and call form the browser
+
+
+**CGI II**
+------------
+- Now we trying to setup a simple form
+- create file name called "form.py"
+
+```python
+#!/usr/bin/python
+
+print "Content-type: text/html"
+print
+
+print "<html>"
+print "<title>Form from Py</title>"
+print "<body>"
+print "<form action='action1.py' method='post'>"
+print "Name: <input type='text' name='name' size='50'><br>"
+print "Title: <input type='text' name='title' size='50'><br>"
+print "E-Mail: <input type='text' name='email' size='50'><br>"
+print "<input type='submit' value='submit'>"
+print "</form>"
+print "</body>"
+print "</html>"
+```
+
+- let's create the "action1.py" file
+
+```python
+#!/usr/bin/python
+import cgi
+
+print "Content-type: text/html"
+print
+
+form = cgi.FieldStorage()
+
+name = form["name"].value
+title = form["title"].value
+email = form["email"].value
+
+print "Yo, ", name, "Wassup !<br>"
+print "Hmm,", title, "ah....<br>"
+print "Is this your mail > ", email, "<br>"
+```
+
+**Globbing**
+
+- Kind of quick and dirty
+- Search against for file/directory search (I think so)
+    
+  ```python
+  >>> import glob
+  >>> search1 = glob.glob('*.py') # list of files has the extension of "py"
+  >>> print search1  # By nature output will be list "Mutable"
+  >>> len(search1)
+  ```
+  - You can loop them for doing anything with FileIO if required
+  - By default "glob" search under the "Current" path
+
+  - ex: Will be using some other directory
+
+    ```python
+    >>> search = glob.glob('/home/ramdasssadha01/*.yaml')
+    ### search = glob.glob('./test/*.yaml')
+    >>> print search
+    ['/home/ramdasssadha01/lineinfile.yaml', '/home/ramdasssadha01/rev-proxy.yaml']
+    >>> len(search)
+    2
+    ```
+
+  - Another kind of search
+    
+    ```python
+    >>> search1 = glob.glob('fileio?.py')
+    >>> search1 = glob.glob('fileio[1-4].py')
+    ```
+
+- Another task to put all together in the script
+
+```python
+#!/usr/bin/python
+import glob
+
+query1 = raw_input("Enter search format with inclusion of directory if required: ")
+
+search1 = glob.glob(query1)
+
+if search1:
+  print "So far you have", len(search1), "matches, and they are below"
+  print search1
+else:
+  print "Boss, No Match"
+```
+
+- Simply, Here we are going to loop the search results
+
+```python
+#!/usr/bin/python
+import glob
+
+query1 = raw_input("Enter search format with inclusion of directory if required: ")
+
+search1 = glob.glob(query1)
+
+if search1:
+  print "So far you have", len(search1), "matches"
+  print "You have got matches, And will gonna be in LOOP"
+  for i in search1:
+    print i
+else:
+  print "Boss, No Match"
+```
+
