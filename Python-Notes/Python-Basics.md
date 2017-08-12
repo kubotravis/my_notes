@@ -596,3 +596,180 @@ print "With Multiple Values Dict: ", mydict
 for k,v in mydict.iteritems():
   print k, v
 ```
+
+**Conditional I**
+
+Conditional Operations/Operator
+  - < (less than)
+  - <= (less than or equal to)
+  - > (Greater than)
+  - >= (Greater than equal)
+  - ==  (Equals to)
+  - != / <>  (Not Equal to)
+
+Note: I just came to know about declaring the var/values in the same line
+
+```python
+#!/usr/bin/python
+
+# This is declaring the 2 var is same line
+
+min, max = 8, 9
+
+print "Min", min
+print "Max", max
+
+# If condition, condition is true it gonna print
+if min < max:
+  print min,"Min is < Max", max
+
+# The condition is NOT true nothing gonna print here !
+if min > max:
+  print min,"Min is > Max", max
+
+if min == max:
+  print "Min eq to Max"
+else:
+  print "Its not Equal"
+
+if min <= max:
+  print "Min less than Max"
+
+if min >= max:
+  print "Min is greater than Max"
+else:
+  print "Max is Max"
+
+if min <> max:
+  print "They are NOT equal"
+else:
+  print "They are equal"
+```
+
+**Conditional II & Conditional III**
+
+- Command line arguments were stored in the `sys` module, so if want to play around arguments you have to import the "sys" module
+- Basically its stores into `sys.argv`, basically its a list. It will store all the cmdline arguments which you are passed
+- `sys.argv` 1st element is the name of the script (just like BASH)
+- Get the length of by using `len(sys.argv)`, it includes the script name also in the count (actually the very 1st one)
+- `elif` are considered as the `nested if`
+- `else` does use any condition parameter, its used to by-pass the all conditions
+
+```python
+#!/usr/bin/python
+
+import sys
+
+print "Simply print the SYS.ARGV", sys.argv
+# Run script pass some are
+# ex: ./basic_cond2.py arg1 arg2 arg3
+# Results: Simply print the SYS.ARGV ['./basic_cond2.py', 'arg1', 'arg2', 'arg3']
+
+passed = len(sys.argv)-1
+print "Length of the ARGS: ", passed
+
+my_len = 2
+
+if passed == 0:
+  print "You are SICK, enter something"
+# Simple condition I
+#else:
+#  print "You got it Bruh !"
+elif passed == my_len:
+  print "Its Equal!"
+elif passed < my_len:
+  print "You are insane"
+elif passed > my_len and passed <= 10:
+  print "Its under 10"
+elif passed >= 11:
+  print "U r awesome"
+```
+
+**For Loops**
+
+- Does the iteration of each of the values from any type of the data
+
+```python
+#!/usr/bin/python
+import string
+
+name="HellYeah"
+
+print "Looping the Name Char"
+for var in name:
+  print var
+
+list = range(1,10)
+print "Looping the Nums"
+for j in list:
+  print j
+
+stringlist = ["This", "is", "String", "list"]
+print "Looping the Stringlist"
+for k in stringlist:
+  print k
+
+# Some weird example, i don't that im gonna use it!
+logfile = ["2017 1.1.1.1 3333", "2017 2.2.2.2 4444"]
+logfile2 = []
+
+for i in logfile:
+  logfile2.extend(string.split(i))
+  print logfile2
+```
+
+**While Loops I & While Loop II**
+
+- Unless the "Condition" becomes TRUE it performs the block of the code
+- So the condition is become "TRUE" then it stops the block & control over to the next
+
+```python
+#!/usr/bin/python
+
+count = 0
+print "Gonna Perform WHILE"
+while count <= 5:
+  print count
+  count = count + 1
+
+print "WHILE is ended"
+
+# Below writing the Infinite loop
+# while 1:
+#   print "Infinite loop"
+
+# Some dump code to check while
+
+my_num = 9
+
+guess_num = input("Guess the number: ")
+
+while my_num != guess_num:
+  guess_num = input("Guess the number: ")
+```
+
+Another example
+
+```python
+#!/usr/bin/python
+import sys
+
+my_num = 9
+count = 0
+
+guess_num = 100 - my_num
+
+while my_num != guess_num:
+  guess_num = input("Guess the number: ")
+
+  if count == 3:
+    print "Would you like to exit the Program? (yes/no): "
+    user_pref = raw_input()
+    if user_pref == "yes":
+      sys.exit()
+    else:
+      count = 0
+  count = count + 1
+```
+
+***Note:*** From the above first it will ask for "4" times, but when you say "no" to exit, it will only asks "3" times. This scenario will be explained later
