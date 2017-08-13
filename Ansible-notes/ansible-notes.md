@@ -2,9 +2,10 @@ Ansible Reference Notes
 -----------------------
 
 ### Table of Contents
-[1. Architecture & Process flow]()
-[2. Creating an Environment]()
-[3 Ansible Inventory and Configuration]()
+[1. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#1-architecture--process-flow)
+[2. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#2-creating-an-environment)
+[3 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#3-ansible-inventory-and-configuration)
+[5. Modules](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#5-modules)
 
 
 ### 1. Architecture & Process flow
@@ -163,7 +164,7 @@ Acutally you NO need to use the `-m command` to specify module because its defau
 - So, what is the difference in command & shell modules ?
   Shell module support ENVIRONMENT vairables (HOME,USER,PWD & others) where `command` moduls doesn't support.
 
-#### 3 Ansible Inventory and Configuration
+### 3 Ansible Inventory and Configuration
 
 **Inventory fundamentals**
 - Basically inventory file can be at anywhere in the files system
