@@ -1,7 +1,13 @@
 Ansible Reference Notes
 -----------------------
 
-#### 1. Architecture & Process flow
+### Table of Contents
+[1. Architecture & Process flow]()
+[2. Creating an Environment]()
+[3 Ansible Inventory and Configuration]()
+
+
+### 1. Architecture & Process flow
 
 **Control server**
 
@@ -64,7 +70,7 @@ There are TWO execution types
 [Local execution is pretty typical execution though, since the python package cant be received by default for local server, for that u have to make HTTP/REST call to execute on the local ]
 
 
-#### 2. Creating an Environment
+### 2. Creating an Environment
 
 LAB - Setup the 3 vm by using the vagrant (acs,web,db)
 
@@ -365,3 +371,110 @@ host_key_checking=False
 $ vim invetory
 10.0.0.0 ansible_python_interpreter=/usr/bin/python2.7
 ```
+
+***Note:*** Above talks with base system that which you run ansible commands. There are support to Python3 ont the both the end. Yet to chaeck the Docs page.
+
+### 5. Modules
+
+Modules are Building block of you Automation
+
+**Fundamentals**
+
+- It does every single action on the target system for you
+
+**3 types of modules**
+- Core [from Ansible]
+- Extra [from Community]
+- Deprecated [Old one]
+
+You no need to all the time to internet to browse the information about modules,
+
+```bash
+$ ansible-doc -l
+  - list all modules from Ansible
+
+$ ansible-doc <modulesname>
+  - more info about the module
+
+$ ansible-doc -s <name>
+  - playbook snippet examples
+```
+
+- Ansible has 15 Categeries of playbook it supports as of now (server, config mngmt, n/w device mangment, deploy, cicd & many)
+
+Some of the modules, 
+
+  - copy [local to remote]
+  - fetch [remote to local]
+  - apt/yum/deb for update
+  - service module [start/stop service]
+
+**Demo - Web/DB/iptable configuration**
+```bash
+$ ansible-doc -l
+$ ansible-doc yum [all yum related params and args]
+```
+
+- Installing the package using yum module
+
+`ansible cfgmng -i exp/inventory_exp -m yum -a "name=vim state=present" --sudo`
+
+
+Ex: `$ ansible webservers -i exp/inventory_exp -m yum -a "name=httpd state=present" --sudo`
+
+Above command installs the httpd server if its not installed
+
+- Before starting the service, let have look at "service" module
+ 
+```bash
+$ ansible-doc service
+$ ansible webservers -i exp/inventory_exp -m service -a "name=httpd enabled=yes state=started" --sudo
+``
+
+- Install DB
+
+```bash 
+$ ansible dbservers -i exp/inventory_exp -m yum -a "name=mysql-server state=present" --sudo
+$ ansible dbservers -i exp/inventory_exp -m service -a "name=mysqld state=started" --sudo
+```
+
+- Stopping the Iptables
+`$ ansible webservers:dbservers -i exp/inventory_exp -m service -a "name=iptables state=stopped" --sudo`
+
+***Note:*** what's up with `webservers:dbservers` pattern
+
+Target Pattern
+
+```
+-OR (both the group)
+  webservers:dbservers
+
+-NOT (except dbservers)
+  !:dbservers
+
+-Wildcard
+  web*.ex.com
+
+-Regex
+  (~web[0-9]+)
+
+-AND (pretty complex not technically)
+  (group1:&group2) - Here we are talking with server which are in both group NOT all node in the both group
+  Make sense when you have server with ROLE as WEB & also in PROD
+
+-Complex one
+  webservers:&prod:!python3
+  - webserver which are in PROD environment but NOT having python 3
+```
+
+**Demo using setup modules**
+
+- Setup modules are called `FACT` modules, which brings the all information about the Operating System
+
+`$ ansible cfgmng -i exp/inventory_exp -m setup` - which retrieves the ultimate information about the system [like ohai in chef]
+
+`$ ansible cfgmng -i exp/inventory_exp -m setup -a "filter=ansible_eth*"` - which only returns the informataion about the Network interfaces
+
+`$ ansible cfgmng -i exp/inventory_exp -m setup -a "filter=ansible_mount"` - which gives the information about HDD & other mounts
+
+`$ ansible all -i exp/inventory_exp -m setup --tree ./setup` - all node information will dumped under setup directory
