@@ -3,8 +3,11 @@ Ansible Reference Notes
 
 ### Table of Contents
 [1. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#1-architecture--process-flow)
+
 [2. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#2-creating-an-environment)
+
 [3 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#3-ansible-inventory-and-configuration)
+
 [5. Modules](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#5-modules)
 
 
@@ -472,10 +475,14 @@ Target Pattern
 
 - Setup modules are called `FACT` modules, which brings the all information about the Operating System
 
-`$ ansible cfgmng -i exp/inventory_exp -m setup` - which retrieves the ultimate information about the system [like ohai in chef]
+`$ ansible cfgmng -i exp/inventory_exp -m setup`
+  which retrieves the ultimate information about the system [like ohai in chef]
 
-`$ ansible cfgmng -i exp/inventory_exp -m setup -a "filter=ansible_eth*"` - which only returns the informataion about the Network interfaces
+`$ ansible cfgmng -i exp/inventory_exp -m setup -a "filter=ansible_eth*"`
+  which only returns the informataion about the Network interfaces
 
-`$ ansible cfgmng -i exp/inventory_exp -m setup -a "filter=ansible_mount"` - which gives the information about HDD & other mounts
+`$ ansible cfgmng -i exp/inventory_exp -m setup -a "filter=ansible_mount"`
+  which gives the information about HDD & other mounts
 
-`$ ansible all -i exp/inventory_exp -m setup --tree ./setup` - all node information will dumped under setup directory
+`$ ansible all -i exp/inventory_exp -m setup --tree ./setup`
+  all node information will dumped under setup directory
