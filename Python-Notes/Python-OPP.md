@@ -974,8 +974,6 @@ This is POLYMORPHISM - these method is more of a Technic
 ```python
 #!/usr/bin/python
 
-#!/usr/bin/python
-
 class Animal(object):
 
   def __init__(self, name):
