@@ -819,3 +819,207 @@ One class can inherit from the another
   - In particular, its methods are inherited
   - This means that instances of an inheriting (child) class an access attributes of the inheritited (parent) class
   - This is simply another level of attribute lookup: Instance, then class, then inherited class
+
+**Inheritance examples**
+
+- Lets start with the code
+
+```python
+#!/usr/bin/python
+
+class Animal(object):
+  def __init__(self, name):
+    self.name = name
+  def eat(self, food):
+    print '%s is eating %s.' % (self.name, food)
+
+class Dog(Animal):
+  def fetch(self, thing):
+    print '%s goes after the %s' % (self.name, thing)
+
+class Cat(Animal):
+  def swatstring(self):
+    print '%s shreds the string' % (self.name)
+
+r = Dog('Rover')
+f = Cat('Fluffy')
+
+r.fetch('Paper')    # Rover goes after the Paper
+f.swatstring()       # Fluff shreds the string
+r.eat('Dog food')   # Rover eating Dog food
+f.eat('CAt food')   # Fluffy eating Cat food
+
+# Below tto simply through an error
+# AttributeError: 'Dog' Object has  no attribute 'swatstring'
+r.swatstring()
+```
+
+Above script is self explanatory
+- Parent class is `Animal`
+- `Animal` class access from child class `Dog` & `Cat`
+- Both Child class invoking the Parent class methods `eat`
+- When Dog child class trying to access the `Cat` child's method you get error, since attribute couldn't find by python. Cus we are invoking this no-where in the code
+
+**Polymorphism**
+("Many Shapes")
+
+**Definition:**
+  - 3rd pillar of OOP
+  - Two class with the same interface
+  - The methods() are often different, but conceptually similar
+    refer the below code for reference
+
+- Lets go by example
+
+```python
+#!/usr/bin/python
+
+class Animal(object):
+
+  def __init__(self, name):
+    self.name = name
+
+  def eat(self, food):
+    print '{0} eats {1}'.format(self.name, food)
+
+class Dog(Animal):
+
+  def fetch(self, thing):
+    print '{0} goes after the {1}!'.format(self.name, thing)
+
+  def show_affection(self):
+    print '{0} wags tail'.format(self.name)
+
+class Cat(Animal):
+
+  def swatstring(self):
+    print '{0} shreds the string !'.format(self.name)
+
+  def show_affection(self):
+    print '{0} purs'.format(self.name)
+
+for a in (Dog('Rover'), Cat('Fluffy'), Cat('Precious'), Dog('Scout')):
+  a.show_affection()
+
+# Above line is the Polymorphism call
+```
+
+**Some Explanation:**
+- So both two class Dog & Cat are inherits from the Animal(Super/Parent) class
+- from the above code both Dog/Cat were inherits `eat()` method from the Parent class
+
+- But `show_affection()` is not inherit method
+  - They have same `NAME`, well functionally same but conceptually different & also they stick with their class.
+  - They independent method with teir class
+
+This is POLYMORPHISM - these method is more of a Technic
+
+***Adding some more information for notes***
+ - Allows for expressiveness in Design: we can say that this group of related classes implement the same action
+ - Duck typing refers to reading an object's attribute to decide whether it is of proper type, rather than checking the type itself
+
+
+- Python itself has classes & Polymorphic
+  This is happens pretty much for almost most of the operations
+
+- For example `len()` function can be used for multiple objects, means that it can play along with string, list, tuples & dict
+
+```python
+    >>> len('Yolo')
+    4
+    >>> len([1, 2, 3, 4])
+    4
+    >>> len(('a', 'b'))
+    2
+    >>> len({'a': 1, 'c': 3})
+    2
+```
+
+- You may ask `len()` is build-in function, how it can be polymorphic when itsn't even a method.
+- Here is magic/truth
+
+  `len()` is built-in function, but basically when we use they translate the method call on the object being passed to them
+
+```python
+    >>> var = "Hi"
+    >>> len(var)
+    2
+    # This is method() of "STRING" object
+    >>> var.__len__()
+    2
+```
+  - Checking the availble method() for the object "var"
+  - Basically we should call Attribute, not necessarily moethod here !
+
+```python
+    >>> dir(var)
+    ['__add__', '__class__', '__contains__', '__delattr__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getslice__', '__gt__', '__hash__', '__init__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '_formatter_field_name_split', '_formatter_parser', 'capitalize', 'center', 'count', 'decode', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'index', 'isalnum', 'isalpha', 'isdigit', 'islower', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+```
+
+- Basically we are using them INDIRECTLY without knowing them. i mean `len()` against the string/tuples & others
+
+- Ok, let try with List/Tuples that how many associated method/attributes are availabel
+
+```python
+    >>> dir([1, 2, 3, 4])
+    ['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__delslice__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getslice__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+    >>> dir(('a', 'b'))
+    ['__add__', '__class__', '__contains__', '__delattr__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getslice__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'count', 'index']
+```
+
+**Inheriting the Constructor**
+
+- lets start eith code example
+
+```python
+#!/usr/bin/python
+
+#!/usr/bin/python
+
+class Animal(object):
+
+  def __init__(self, name):
+    self.name = name
+
+  def eat(self, food):
+    print '{0} eats {1}'.format(self.name, food)
+
+class Dog(Animal):
+
+  def fetch(self, thing):
+    print '{0} goes after the {1}!'.format(self.name, thing)
+
+d = Dog('dogname')
+
+print d.name
+```
+
+- Another example
+
+```python
+Code ===================
+#!/usr/bin/python
+import random
+
+class Animal(object):
+
+  def __init__(self, name):
+    self.name = name
+
+  def eat(self, food):
+    print '{0} eats {1}'.format(self.name, food)
+
+class Dog(Animal):
+
+  def __init__(self, name):
+    super(Dog, self).__init__(name)
+    self.breed = random.choice(['Mutt', 'Shih Tzu', 'Beagle', 'Huskey'])
+
+  def fetch(self, thing):
+    print '{0} goes after the {1}!'.format(self.name, thing)
+
+d = Dog('dogname')
+
+print d.name
+print d.breed
+```
