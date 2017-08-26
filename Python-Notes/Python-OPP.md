@@ -600,3 +600,77 @@ Class Attributes Vs. Instance Attributes
 - We know that Class data can be accessed by as many INSTANCE we create!
   So class data intend to created for "SHARE"
 - Will start with an example
+
+```python
+#!/usr/bin/python
+
+class InstanceCounter(object):
+  count = 0
+
+  def __init__(self, val):
+    self.val = val
+    InstanceCounter.count += 1   # Here we are accessing the class data in "object.attribute" format. Is that mean Class also an object - Refer below explanation
+  def set_val(self, newval):
+    self.val = newval
+  def get_val(self):
+    return self.val
+
+  def get_count(self):
+    return InstanceCounter.count
+
+a = InstanceCounter(5)
+b = InstanceCounter(13)
+c = InstanceCounter(17)
+
+for obj in (a, b, c):
+  print "val of obj: %s" % (obj.get_val())
+  print "count is: %s" % (obj.get_count())
+```
+(Reminder: Everything in Python is an object)
+
+- As we you can the above commented item, "Is class also is an object?"
+  Let's go by example:
+
+```python
+    >>> class MyClass(object):
+    ...     pass
+    ...
+    >>> print MyClass
+    <class '__main__.MyClass'>
+
+    # If this is object, does it have attribute ?
+    >>> print dir(MyClass)
+    ['__class__', '__delattr__', '__dict__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__']
+    # Seems there are PRIVATE/MAGIC attribute
+
+    # Ok, lets set some value/attribute (attribute name is "val")
+    >>> MyClass.var = 5
+
+    # Interestingly, the aattribute which is setup 'ed by us also included in the DIRECTORY list (you can see the "var" at the last in the list)
+    >>> print dir(MyClass)
+    ['__class__', '__delattr__', '__dict__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'var']
+```
+
+- Another question
+  
+  If we are able to setup some values, then why are accessing the class value/attribute with class name
+    - From the previous exampe (here - instanceCounter.count += 1)
+    Reason:
+      Because of global variable. If you simply call "var" it going to access the global variable instead of class attribute
+      So in-order to avoid that we have to use the "object.attribute" format which is "instanceCounter.count"
+
+- Previous code output explanation:
+
+```bash
+    val of obj: 5
+    count is: 3
+    val of obj: 13
+    count is: 3
+    val of obj: 17
+    count is: 3
+```
+- from above output you might be asking why we are getting "3" as count ?
+  Because we are running/creating the instance (all 3 via loop), so every single time __init__ got incremented & that's why we are getting the "3" value
+
+- As of above code example we getting the count "3" via class method attrbute. As we already aware instance lookup for the attribute 1st instance itself.
+  So can we access the count via instance itself? answer is "yes" please refer the below code
