@@ -674,3 +674,148 @@ for obj in (a, b, c):
 
 - As of above code example we getting the count "3" via class method attrbute. As we already aware instance lookup for the attribute 1st instance itself.
   So can we access the count via instance itself? answer is "yes" please refer the below code
+
+```python
+#!/usr/bin/python
+
+class InstanceCounter(object):
+  count = 0
+
+  def __init__(self, val):
+    self.val = val
+    InstanceCounter.count += 1
+  def set_val(self, newval):
+    self.val = newval
+  def get_val(self):
+    return self.val
+
+  def get_count(self):
+    return InstanceCounter.count
+
+a = InstanceCounter(5)
+b = InstanceCounter(13)
+c = InstanceCounter(17)
+
+for obj in (a, b, c):
+  print "val of obj: %s" % (obj.get_val())
+  print "count (from instance): %s" % (obj.count)
+```
+
+**Assignment**:
+Rough Definition:
+  - You have max_number & empty list
+  - Append some data to the list which should <= max_number, If the list len bigger that max_number then drop the last element from the list
+  - Write a Class and process the same
+  - Here is the code
+
+```python
+#!/usr/bin/python
+
+class MaxSizeList(object):
+
+  def __init__(self, max):
+    self.max_size = max
+    self.innerlist = []
+
+  def push(self, obj):
+    self.innerlist.append(obj)
+    if len(self.innerlist) > self.max_size:
+      self.innerlist.pop(0)
+
+  def get_list(self):
+    return self.innerlist
+
+a = MaxSizeList(3)
+b = MaxSizeList(1)
+
+a.push("one")
+a.push("two")
+a.push("three")
+a.push("four")
+
+b.push("five")
+b.push("six")
+b.push("seven")
+b.push("eight")
+
+print(a.get_list())
+print(b.get_list())
+```
+
+**Note for myself:**
+- Check out import the custom class to module & using those module in your script
+
+**Inheritance and Polymorphism**
+**Inheritance Attributes**
+
+**Recap:**
+**Encapsulation**
+  - Its a facility store the Data and Objects
+  - Provides data Integrity via Setter and mGetter methods
+
+**Inheritance:**
+  - Ability that, one Class inherits the attributes of another Class
+
+- Lets write some code example:
+
+```python
+#!/usr/bin/python
+
+class Date(object):       # Inherts from the 'object' class (not explained as of now - its there below)
+  def get_date(self):
+    return '2020-03-03'
+
+class Time(Date):         # Have look at this declaration, This is inherits from the 'Date' class
+  def get_time(self):
+    return '01:02:03'
+
+dt = Date()
+print(dt.get_date())
+
+tm = Time()
+print(tm.get_time())
+print(tm.get_date())    # Found this method in the 'Date' class, Since we declared "Date" object as ARG in TIME we are able to call it with tm.xx()
+```
+
+- So class `Time` inherits from `Date` & `Date` inherits from the `CLASS` called object
+ (=> "object" built-in class provided by python)
+
+- So we have created the object `Date()` with `dt`
+- Also we have created the object `Time()` with `tm`
+
+- now `dt` calling its class method - `get_date()`
+- also `tm` calling its Object method - `get_time()` adding its also calling `get_date()` method, because the we pahe placed the Date Class name in the Argument list
+
+- If you remove DATE from this line `class Time(Date):` and run the script it will fail
+
+- In general Python will follow the `LOOKUP` inorder to find the things
+- Earlier we were discussing about the ATTRIBUTE lookup, now we are going to the `object.lookup` (since we are Inheriting the another class in to the class)
+- From the above code `print(tm.get_time())` is the `object.attribute()` lookup
+- Python doesn't care wether the its `Arrtibute, Class.attribute, object.attribute()` by default its considered as the ATTRIBUTE lookup
+- Every single case python will follow the these place inorder to do the Attribute lookup
+  - Instance itself
+  - The Class (Instance belongs to)
+  - The Class from which Class this inherits (basically looking for the parent class)
+
+**Some Inheritance Terms**
+- An Inheriting class known as follows: `class MyClass(YourClass)`
+  - Child class
+  - Derived class
+  - Subclass
+
+- An Inherited class known as follows: `Class YourClass(object)`
+(Also an child class if "object" but in this case)
+  - Parent class
+  - Base class
+  - Super class
+
+**Inheritance**
+
+Inheritance: The 2nd pillar of OOP
+
+One class can inherit from the another
+
+  - The class attributes are inherited
+  - In particular, its methods are inherited
+  - This means that instances of an inheriting (child) class an access attributes of the inheritited (parent) class
+  - This is simply another level of attribute lookup: Instance, then class, then inherited class
