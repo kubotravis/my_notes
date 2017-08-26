@@ -995,7 +995,6 @@ print d.name
 - Another example
 
 ```python
-Code ===================
 #!/usr/bin/python
 import random
 
