@@ -48,19 +48,20 @@ so the first 3 bit are belongs to NEWORK & rest goes for HOST
 
 - `127` belongs to no class (Basically goes to localhost), Its reserved for loopback interface
 
-How to find out the Netwirk address in case of any class of IPv4 address ?
-IP is  `192.34.56.67`
+How to find out the Netwirk address in case of any class of IPv4 address ? ip is `192.34.56.67`
 
 Ans:
-
 Since its Class C IPv4. so first three bit goes for NW bit & rest goes for HOST
-Ip 192.34.56.0 -> 0 is the starting of the HOST IP here, So this is Network IP
+Ip `192.34.56.0` -> `0` is the starting of the HOST IP here, So this is Network IP
 it must belongs to any of network devices (like Router/Switch)
 
 Commonly used IPv4 Private Address
+
+```
 Class A: 10.x.x.x
 Class B: 172.16-31.x.x
 Class C: 192.168.x.x
+```
 
 What is the Purpose of the Private Address ?
 Imagine any company setup network with `8.x.x.x` & some of other device got the IP from it.
