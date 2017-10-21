@@ -70,8 +70,8 @@ When ever you make query to Google public DNS `8.8.8.8`, it will NEVER match or 
 Because the PC thinks it local & it never go for DEFAULT GATEWAY to resolve the `8.8.8.8`
 So in-order to avoid such collision we had to have the PRIVATE IPs as listed above.
 
-4 Beautiful Binary
----
+### 4 Beautiful Binary
+
 #### Questions:
 1. What is the binary values of 4th position (right to left) ?
 2. Are there only 10 types of people regarding binary ?
@@ -99,8 +99,8 @@ here numbering system goes like below, (from left to right)
 ... 128 <- 64 <- 32 <- 16 <- 8 <- 4 <- 2 <- 1
 ```
 
-5 Decimal to Binary Conversion
----
+### 5 Decimal to Binary Conversion
+
 #### Questions:
 1. What is the Decimal equivalent of 01011010 ?
 2. What is the binary equivalent of 130 ?
@@ -146,3 +146,60 @@ Add numbers which  got all ONEs
 
 so above binary becomes,
 `10111000 - 184`
+
+### 6 The Mask Unveiled
+
+#### Questions:
+1. PC has the IPv4 15.69.35.28 with the mask of 255.255.0.0
+   What is the network this computer is connected to ?
+2. How many bits from the IP are being used to represent the "network" ?
+3. What is the significance of a bit being "on" in a mask ?
+4. Do the Mask bits, going from left to right, have to be "on" in a order ?
+5. What is the purpose of Mask ?
+
+**Notes:**
+Purpose Mask: Actually it identifies IPv4 address as which portion is part of "network" & which part is "Host"
+
+  - IP - 32 bits of address
+  - Mask - 32 bits of address
+
+Mask/Network Mask/Subnet Mask - all are same simply naming convention differs
+
+How they are saying its 24 bit network (something like this 192.168.1.0/24)
+
+Ex:
+
+The IPv4 is    : `192.168.1.15`
+and its Binary for each decimal:   `11000000 10101000 00000001 00001111`
+
+Mask is : `255.255.255.0`
+Binary: `11111111 11111111 11111111 00000000`
+
+If you subtract the IPv4 binary with Mask you get the follow
+
+```
+IPv4 11000000 10101000 00000001 00001111
+Mask 11111111 11111111 11111111 00000000
+----------------------------------------
+     11000000 10101000 00000001 00000000   -> 192.168.1.0
+```
+   - Since each deciam has 8bits so 3*8=24, since last bit considered as HOST so you cant include it for calculating the netwowrk
+     (Almost 3 decimal same as IP). so it becomes 192.168.1.0/24
+
+ - Here is the another question
+  ```
+  Ip : 192.168.1.15
+  Mask: 255.255.0.0
+  ```
+  
+- Now what is the NetworkIp or network address ?
+  Its gonna be : `192.168.0.0` 
+  ( Possibly from given mask first 2 field goes for Network & 2 for HOST, so it becomes `192.168.0.0/16`)
+
+- One more question
+```
+ Ip : 192.168.1.15
+ Mask: 255.0.0.0
+```
+  - Now what is the Network IP or network address ?
+    Its gonna be : `192.0.0.0` ( Possibly from given mask first 3 field goes for Network bit & 1 for HOST, so it becomes `192.0.0.0/8`)
