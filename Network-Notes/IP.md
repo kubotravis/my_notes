@@ -83,8 +83,9 @@ So in-order to avoid such collision we had to have the PRIVATE IPs as listed abo
 3. I didn't get the question at all !
 
 **Notes**
+
 Base10 Numbering  ->  Decimal
-here numbering system goes like below, (from left to right)
+   - Here numbering system goes like below, (from left to right)
 
 ```
 ex:
@@ -93,7 +94,7 @@ ex:
 ```
 
 Base2 numbering - 1 & 0 -> Binary
-here numbering system goes like below, (from left to right)
+  - here numbering system goes like below, (from left to right)
 
 ```
 ... 128 <- 64 <- 32 <- 16 <- 8 <- 4 <- 2 <- 1
@@ -167,7 +168,7 @@ Mask/Network Mask/Subnet Mask - all are same simply naming convention differs
 
 How they are saying its 24 bit network (something like this 192.168.1.0/24)
 
-Ex:
+**Ex:**
 
 The IPv4 is    : `192.168.1.15`
 and its Binary for each decimal:   `11000000 10101000 00000001 00001111`
@@ -175,7 +176,7 @@ and its Binary for each decimal:   `11000000 10101000 00000001 00001111`
 Mask is : `255.255.255.0`
 Binary: `11111111 11111111 11111111 00000000`
 
-If you subtract the IPv4 binary with Mask you get the follow
+If you MULTIPLY the IPv4 binary with Mask you get the follow
 
 ```
 IPv4 11000000 10101000 00000001 00001111
