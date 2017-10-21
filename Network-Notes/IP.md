@@ -50,7 +50,7 @@ so the first 3 bit are belongs to NEWORK & rest goes for HOST
 
 How to find out the Netwirk address in case of any class of IPv4 address ? ip is `192.34.56.67`
 
-Ans:
+Answer:
 Since its Class C IPv4. so first three bit goes for NW bit & rest goes for HOST
 Ip `192.34.56.0` -> `0` is the starting of the HOST IP here, So this is Network IP
 it must belongs to any of network devices (like Router/Switch)
@@ -64,7 +64,85 @@ Class C: 192.168.x.x
 ```
 
 What is the Purpose of the Private Address ?
+
 Imagine any company setup network with `8.x.x.x` & some of other device got the IP from it.
 When ever you make query to Google public DNS `8.8.8.8`, it will NEVER match or get response.
 Because the PC thinks it local & it never go for DEFAULT GATEWAY to resolve the `8.8.8.8`
-So in-order to avoid such collision we had to have the PRIVATE IPs as listed above
+So in-order to avoid such collision we had to have the PRIVATE IPs as listed above.
+
+4 Beautiful Binary
+---
+#### Questions:
+1. What is the binary values of 4th position (right to left) ?
+2. Are there only 10 types of people regarding binary ?
+3. How many place holders do we need to be concerned with ?
+
+#### Answers:
+1. 8
+2. Gotcha - this is Binary joke
+3. I didn't get the question at all !
+
+**Notes**
+Base10 Numbering  ->  Decimal
+here numbering system goes like below, (from left to right)
+
+```
+ex:
+45,1234 ->
+... 10000  <- 1000 <- 100 <- 10 <- 1
+```
+
+Base2 numbering - 1 & 0 -> Binary
+here numbering system goes like below, (from left to right)
+
+```
+... 128 <- 64 <- 32 <- 16 <- 8 <- 4 <- 2 <- 1
+```
+
+5 Decimal to Binary Conversion
+---
+#### Questions:
+1. What is the Decimal equivalent of 01011010 ?
+2. What is the binary equivalent of 130 ?
+3. What is the binary equivalent of 255 ?
+
+#### Answer:
+Simple, do it yourself !
+
+**Notes**
+Octet = group of 8 bits
+8bits = 1 Byte
+
+#### "Does it fit" game
+
+If you want convert any number into binary, write down the below
+
+`128 | 64 | 32 | 16 | 8 | 4 | 2 | 1`  & ask that number does it fit in ?
+
+ ex: take a number 130 
+  - It will fit in in 128 & take reminder 2 & 2 only will fit in 2.
+  - Now mark as 1 which ever FIT in & make rest as 0
+  - This is how you will be the Decimal to Binary conversion
+ so,
+ 
+ ```
+ 130 -> 10000010
+ 193 -> 11000001
+ 17 -> 00010001
+ 95 -> 01011111
+ 136 -> 10001000
+```
+
+#### Binary to Decimal conversion
+- This is reverse of the above function
+- Get the binary number & map it as below
+
+```
+ 1      0     1     1    1    0    0    0
+128 <- 64 <- 32 <- 16 <- 8 <- 4 <- 2 <- 1
+```
+
+Add numbers which  got all ONEs
+
+so above binary becomes,
+`10111000 - 184`
