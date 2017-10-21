@@ -204,3 +204,100 @@ Mask 11111111 11111111 11111111 00000000
 ```
   - Now what is the Network IP or network address ?
     Its gonna be : `192.0.0.0` ( Possibly from given mask first 3 field goes for Network bit & 1 for HOST, so it becomes `192.0.0.0/8`)
+
+Vid-7 Stealing the Host Bits
+---
+
+#### Questions:
+1. How many host bits would be sacrificed to network addressing to create exactly 16 new subnetworks ? 4
+
+2. In the finger game, When you start with a 2 and verbally double the number with each new digit raised, does the number you speak represents how many new subnets you can create, and the digits in the air represent the number of host bits sacrificed ?
+3. What is the new mask, in the octet where 2 previous host bits are being converted over to network addressing ?
+
+
+#### Answers:
+1. 4 host bits required for 16 new subnets
+2. Raised fingers are - HOST bit sacrifies count
+
+Number are - New Subnet
+
+3. 192 ( refer the Ref section)
+
+
+**Notes:**
+
+**Task:**
+ - There is given network topology (Topology contains 3 different subnet & 6 routers - As per the diagram in the give excercise)
+ - Now you boss want to have 192.168.5.0/24 network have access to over all topology
+
+Things are required:-
+ 1. Identify No.of required subnet
+ 2. Use the Finger Game
+ 3. Identify no.of Host bits needs to be sacrificed
+ 4. Let Everyone know (Meant devices in the network)
+
+**Answers:**
+1. Identify No.of required subnet -> is 2 (As per the diagram in the give excercise)
+2. Finger Game: (how many host bit required to create 3 subnets)
+
+mark `2` in the THUMB finger.
+
+Release other finger as how many subnet you want. For example if you are releasing POINTER & MIDDLE finger next.
+
+`2 * 2 = 4` mark INDEX finder values (Thumb finger values * Verbally same number)
+`4 * 2 = 8` mark MIDDLE finger vales (Previous finger values * Thumb finger values)
+... (If you the same as above for rest other 2 fingers)
+
+`8 * 2 = 16` RING finger
+`16 * 2 = 32` LIITLE finger
+
+Which means that:-
+
+- So all FINGERs got values (They are UP), -> If you took 5 bits from HOST & Allocate it to NETWORK bit then you can have 32 brand new SUBNETs
+- In that case we have to SACRIFICE 2 bits from HOST bits to create 4 subnets ( actually we are going to create only 3)
+- So those sacrificed bits from HOST & can NOT be re-used in host bits at all
+
+3. From the above 2 bits needs to be sacrificed from the host bit
+
+4. This only done by modifying the MASK, so the given -> `192.168.5.0/24`
+
+  - After `2` bits goes from HOST to Network, i gonna be -> `192.168.5.0/26` (so the host bit gonna only have `6` bits but we got `2` more subnet [Network address space])
+
+  - since from the above we took 2 bits from HOST, so -> `192.168.5.0/26`
+
+  - it becomes
+  ```
+  ip -> 192.168.5.0
+  mask -> 255.255.255.192 (This calculated based on below Ref section)
+  ```
+
+ **Ref:**
+
+ ```
+ Mask Values: 128 192 224 240 248 252 254 255
+ Weights:     128 64  32  16  8   4   2   1
+```
+
+ **Explanation:**
+  a) write down the weights first
+  b) since 2 bits were taken from host & so mark the first 2 decimal as 1
+  c) And then add the all marked ones
+
+```
+a) ->  128 64  32  16  8   4   2   1
+b) ->  1    1   -   -  -   -   -   -
+c) ->  128+64 = 192  (so then mask is 255.255.255.192) - (same value mentioned in the MASK values)
+```
+
+**Tasks**
+How many host bit you going to steal to create the 42 subnets?
+
+  - Use the finger game:-
+  - As per the finger game we required `6` (`6` finger UP) host bits to create the `42` subnet (Actually in `6` finger maximum we can create the `64` subnets)
+  - So if the given is -> `192.168.0.1/24`
+
+  - Ans goes like this
+      ```
+      192.168.0.1/30
+      mask is 255.255.255.255.252
+      ```
