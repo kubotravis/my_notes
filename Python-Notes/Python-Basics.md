@@ -2,13 +2,13 @@ Python Basics
 ---
 Minimal Info can found here.
 
-**Intro**
+### Intro
 Get it from internet or some where.
 
 **Note**
 Be alert on INDENTATION
 
-**Basic Math**
+### Basic Math
 
 ```python
 >>> print 1 + 1  # This is the reason its called loosely type
@@ -19,7 +19,7 @@ Be alert on INDENTATION
 >>> print 10 - 5 (Sub)
 ```
 
-**Strings**
+### Strings
 (Double quotes)
 ```python
 >>> print "Hello World"
