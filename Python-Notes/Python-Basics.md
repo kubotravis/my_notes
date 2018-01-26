@@ -2,6 +2,51 @@ Python Basics
 ---
 Minimal Info can found here.
 
+#### Table of Content
+
+- [Intro](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#intro)
+- [Basic Math](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#basic-math)
+- [Strings](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#strings)
+- [Variables](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#variables)
+- [Data Types](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#data-types)
+- [Basic Math](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#basic-math)
+- [STDIN Input](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#stdin-input)
+- [Strings I](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#strings-i)
+- [Strings II](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#strings-ii)
+- [Strings III](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#strings-iii)
+- [List I](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#list-i)
+- [List II](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#list-ii)
+- [List III](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#list-iii)
+- [List IV](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#list-iv)
+- [Dictionaries](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#dictionaries)
+- [Jumping into Dictionary](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#jumping-into-dictionary)
+- [Conditional I](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#conditional-i)
+- [Conditional II & Conditional III](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#conditional-ii--conditional-iii)
+- [For Loop](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#for-loop)
+- [While Loop](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#while-loops-i--while-loop-ii)
+- [Files IO 1](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#file-io-i)
+- [Files IO 2](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#file-io-ii)
+- [Files IO 3](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#files-io-iii)
+- [Files IO 4](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#files-io-iv)
+- [Exception I & II](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#exceptions-i--ii)
+- [Function](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#function)
+- [Module](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#module)
+- [SHUTIL](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#shutil)
+- [Regex I](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#regular-expressions-i)
+- [Regex II & III](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#regular-expressions-ii--iii)
+- [RegEx IV](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#regular-expressions-iv)
+- [RegEx V](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#regular-expressions-v)
+- [RegEx VI & VII](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#regular-expressions-vi--vii)
+- [RegEx VIII](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#regular-expression-viii)
+- [RegEx IX & X](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#regular-expressions-ix--x)
+- [Syslog Integration I](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#syslog-integration-i)
+- [Syslog Integration II](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#syslog-integration-ii)
+- [CGI I](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#cgi-i)
+- [CGI II](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#cgi-ii)
+- [Globbing](https://github.com/kubotravis/my_notes/blob/master/Python-Notes/Python-Basics.md#globbing)
+
+---
+
 #### Intro
 Get it from internet or some where.
 
@@ -699,7 +744,7 @@ elif passed >= 11:
 ```
 ---
 
-#### For Loops
+#### For Loop
 
 - Does the iteration of each of the values from any type of the data
 
@@ -1125,7 +1170,7 @@ print hand1.readline()
 ```
 ---
 
-#### Functions
+#### Function
 - Function does kind of mask/encapsulation to the code
 - Use decent name for the function which is not supposed to be clash with build-in calls/functions
 - Its ultimately based on the INTENDATION
@@ -1175,7 +1220,7 @@ else:
 ```
 ---
 
-#### Modules
+#### Module
 - How to load module? by using `import <module_name>`
 - How get anyother functions of loaded modules, by using `dir (mod_name)`
 - multiple values of any function stored in list, no TUPLEs `(>>> sys.path)`
@@ -2068,6 +2113,7 @@ logger.error(logmessage)
 - If we used `SysLogHandler()` by default it prefix `Date/Time Stamp, hostname` like things
 
 In latest system, it gonna be `rsyslog`, so thinking that steps on the OS gonna be different.
+
 ---
 
 #### CGI I
@@ -2093,7 +2139,6 @@ print "</body>"
 print "</html>"
 ```
 Make it executable and call form the browser
-
 
 #### CGI II
 
@@ -2140,6 +2185,7 @@ print "Is this your mail > ", email, "<br>"
 ```
 
 ---
+
 #### Globbing
 
 - Kind of quick and dirty
