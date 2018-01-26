@@ -2,13 +2,13 @@ Python Basics
 ---
 Minimal Info can found here.
 
-### Intro
+#### Intro
 Get it from internet or some where.
 
 **Note**
 Be alert on INDENTATION
 
-### Basic Math
+#### Basic Math
 
 ```python
 >>> print 1 + 1  # This is the reason its called loosely type
@@ -18,8 +18,9 @@ Be alert on INDENTATION
 >>> print 2**16 (Exponentional - 2 Power 16)
 >>> print 10 - 5 (Sub)
 ```
+---
 
-### Strings
+#### Strings
 (Double quotes)
 ```python
 >>> print "Hello World"
@@ -44,7 +45,7 @@ help> module spam # Searching the documentation for the module
 help> quit  # Exit out from the help interpreter
 ```
 
-**Variables**
+#### Variables
 
 ```python
 >>> print 200 / 4 * 5
@@ -59,7 +60,9 @@ name = "Python"   # This how assigns VAR/VALUE combination
  - "=" is the assignment operator here
  - We have used String so we have to keep it under `""` much like in all other programming language
 
-**Data Types**
+---
+
+#### Data Types
 
 - String, Int, Float, Lists, Tuples, Dictionary
 - Python interpreter was pretty smart to understand what is the variable type which is available in the script, will cover more in the type() later
@@ -119,7 +122,9 @@ Also note that, if you update existing variable also it update to NEW location
 >>> id(val)
 140653874997720
 ```
-**Basic Math**
+---
+
+#### Basic Math
 
 - Python follow standard operation
 - Just like all other programming language, python also its own order evaluation
