@@ -184,8 +184,9 @@ We can put the above in the single line
 >>> print "100 divided 16 is :", 100 / 16, "An the reminder is:", 100 % 16
 100 divided 16 is : 6 An the reminder is: 4
 ```
+---
 
-**STDIN input**
+#### STDIN input
 
 String Concatenation
 
@@ -258,8 +259,9 @@ print "Have FUN !!!!!"
 
 #END
 ```
+---
 
-**Strings I**
+#### Strings I
 
 - Calculating the string with len()
 
@@ -292,7 +294,8 @@ For the below, very first character noted as "0
 - `print msg[2::10]` - print the from the 2rd value + every 5th occurences of it
 `'cmw'`
 
-**Strings II**
+
+#### Strings II
 
 In order to use the string related operation you have use the following once after the shebang shell `import string`
 
@@ -313,7 +316,7 @@ print string.split(name)  # Here delimiter considered as " " since name delimite
 
 ```
 
-**String III**
+#### String III
 
 Write the script from above - String II
 (Include "for" looping the each character in the string)
@@ -347,7 +350,9 @@ print "Join the Name: ", string.join(name)
 **Note**
 Interactive Shell doesn't required the "print" to return value but script EXPLICITLY required the "print" return the values
 
-**Lists I**
+---
+
+#### Lists I
 - Which is used to allow store in the "String,int, whatever" values in comma separated list & gives access to them
 - List should declared inside the `[]` with `","` separated values
 - anything quoted within `""` are considered as strings
@@ -413,7 +418,7 @@ numlist.insert(0, 1)
 print "After Insert: ", numlist
 ```
 
-**List II**
+#### List II
 
 - `range(10)` => print 0-9 in list format
 - `range(1, 10)` => prints from 1 to 9
@@ -474,7 +479,7 @@ stringlist.insert(0, "myNew")
 print "After insert: ", stringlist
 ```
 
-**List III**
+#### List III
 
 - Gonna dealing with the String manipulation, by processing the logfile
 - `logfile[0:3]` - prints 0th, 1st & 2nd index element not the 3rd one: refer below code
@@ -510,11 +515,13 @@ print "Bring the logfile3 bck to string", string.join(logfile3)
 print logfile3
 ```
 
-**List IV**
+#### List IV
 
 Writes the script for the above (We already did it)
 
-**Dictionaries**
+---
+
+#### Dictionaries
 
 Intro:
 
@@ -551,7 +558,7 @@ print type(distro2)
 
 That's all abut the Tuples
 
-**Jumping into Dictionary**
+#### Jumping into Dictionary
 - Basically its a BULK in number of Key-Value pair
 - Also its an un-ordered list / If you want list, then you have to use SORT function but it by default print in KEY in alphabetical order
 
@@ -601,8 +608,9 @@ print "With Multiple Values Dict: ", mydict
 for k,v in mydict.iteritems():
   print k, v
 ```
+---
 
-**Conditional I**
+#### Conditional I
 
 Conditional Operations/Operator
 - `<` less than
@@ -651,7 +659,7 @@ else:
   print "They are equal"
 ```
 
-**Conditional II & Conditional III**
+#### Conditional II & Conditional III
 
 - Command line arguments were stored in the `sys` module, so if want to play around arguments you have to import the "sys" module
 - Basically its stores into `sys.argv`, basically its a list. It will store all the cmdline arguments which you are passed
@@ -689,8 +697,9 @@ elif passed > my_len and passed <= 10:
 elif passed >= 11:
   print "U r awesome"
 ```
+---
 
-**For Loops**
+#### For Loops
 
 - Does the iteration of each of the values from any type of the data
 
@@ -723,7 +732,7 @@ for i in logfile:
   print logfile2
 ```
 
-**While Loops I & While Loop II**
+#### While Loops I & While Loop II
 
 - Unless the "Condition" becomes TRUE it performs the block of the code
 - So the condition is become "TRUE" then it stops the block & control over to the next
@@ -779,7 +788,9 @@ while my_num != guess_num:
 
 ***Note:*** From the above first it will ask for "4" times, but when you say "no" to exit, it will only asks "3" times. This scenario will be explained later
 
-**File I/O I**
+---
+
+#### File I/O I
 
 - In python if you open a file, the file handlers gonna run IN-MEMORY
 - Just any other language its does all things with python
@@ -842,7 +853,7 @@ everything = handler1.readlines()
 print "Here we are printing everything by using the readlines()", everything
 ```
 
-**File I/O II**
+#### File I/O II
 
 - Here we will be using 2 handlers for both "Read" & "Write" operation
 - Just came to know Write line function doesn't insert the NEW line ("\n"). Yes, its so if you are copying any content to an another file it gonna be same as original
@@ -870,7 +881,7 @@ hand1.close()
 hand2.close()
 ```
 
-**File I/O III**
+#### File I/O III
 Here we are going to prompt the user to enter the files name/location - Nothing fancy
 
 - some "append" based operation
@@ -914,7 +925,7 @@ hand1.writelines(val2)
 hand1.close()
 ```
 
-**File I/O IV**
+#### File I/O IV
 
 - Basically content handled in FILE I/O was `String`, Especially in `write()` operation
 - So variable has integer values `(val = 3)` & you are trying to write it into another file by using `write()` it will fail.
@@ -995,8 +1006,9 @@ while myint <= 100:
 
 hand1.close()
 ```
+---
 
-**Exceptions I & II**
+#### Exceptions I & II
 
 - It can used to print pretty decent error info when failure, instead of Generic Python error msg
 - Basic demo on try & except
@@ -1111,8 +1123,9 @@ while 1:
 print "Will be moving on..."
 print hand1.readline()
 ```
+---
 
-**Functions**
+#### Functions
 - Function does kind of mask/encapsulation to the code
 - Use decent name for the function which is not supposed to be clash with build-in calls/functions
 - Its ultimately based on the INTENDATION
@@ -1160,15 +1173,15 @@ if answer != value:
 else:
   print "Alright, its very easy anyway"
 ```
+---
 
-**Modules**
+#### Modules
 - How to load module? by using `import <module_name>`
 - How get anyother functions of loaded modules, by using `dir (mod_name)`
 - multiple values of any function stored in list, no TUPLEs `(>>> sys.path)`
 
 - From the modules directory, you get the *.py ascii code of the modules
   - *.pyc - is the bit code compiles version of *.py files, when you say "import.sys" this is files been used for the faster execution (not sure check the internet)
-
 - You can `import` only required function in the module, instead importing the complete modules
 - like `from sys import path`
 
@@ -1187,7 +1200,8 @@ $ python
 - When you `import` a module it uses totally different namespace from actual main program that you wrote
 - For exmple, after `import sys`  the `sys.path` & `path` are totally different, so you no need to worry about the overlapping
 
-**SHUTIL**
+---
+#### SHUTIL
 
 Shell Utilities
 
@@ -1264,9 +1278,9 @@ dst = "temp"
 
 shutil.move(src, dst)
 ```
+---
 
-
-**Regular Expressions I**
+#### Regular Expressions I
 
 - By default regex not inclueded in the Python core, so we have to import like `import re`
 - From interactive shell you can do the following,
@@ -1342,7 +1356,7 @@ print "From example-2"
 print match2.group()
 ```
 
-**Regular Expressions II & III**
+#### Regular Expressions II & III
 
 - Will see how to "Ignore" the case sensitive, You can ignore as mentioned in the below, [dont mess around "re.IGNORECASE" keep as it is]
   ```python
@@ -1506,7 +1520,7 @@ Just like space notation `\s`, we cause for word as `\w` & digit has `\d` and mo
     this is a 2017
     ```
 
-**Regular Expressions IV**
+#### Regular Expressions IV
 
 - There is something called `literal` search (refer the below code)
   ```python
@@ -1527,7 +1541,7 @@ Just like space notation `\s`, we cause for word as `\w` & digit has `\d` and mo
     this is a 2017
     ```
 
-**Regular Expressions V**
+#### Regular Expressions V
 
 - Writing the script for the above scenario(s) we come across
 
@@ -1597,7 +1611,7 @@ while c<=t:
     c = c + 1
 ```
 
-**Regular Expressions VI & VII**
+#### Regular Expressions VI & VII
 
 - Scaling out the above script
 - Since all case/example we have seen searching BGINNING of the string ! There is no examples shown to search middle of string (right?) all beacuse we have used the `match` function call `re.match`
@@ -1724,7 +1738,7 @@ while c<=t:
   c = c + 1
 ```
 
-**Regular Expression VIII**
+#### Regular Expression VIII
 
 - Will sending new compile format to search the e-mail address
 - Following can be used
@@ -1812,7 +1826,7 @@ while c<=t:
   c = c + 1
 ```
 
-**Regular Expressions IX & X**
+#### Regular Expressions IX & X
 
 - Will be working with the files
 - Find the below code simply match/search/findall/finditem for given condition
@@ -1956,8 +1970,9 @@ for searchstring in hand1.readlines():
   mask_is = reg1.sub("dummy@domain.local", searchstring)
   hand2.writelines(mask_is)
 ```
+---
 
-**Syslog Integration I**
+#### Syslog Integration I
 
 - Python has capability of logging info into `SYSLOG` (from level 7 to 0)
 - To create any log object you have to initiate the `logger` object with `getLogger` sub method `logger = logging.getLogger()`
@@ -2004,7 +2019,7 @@ logger.error(logmessage)
 - By default `logger` default mode is `append`, which means that if you run the above scipt multiple times the log content get appeneded
 - If you dont want "append" as defult, then specify required method
 
-**Syslog Integration II**
+#### Syslog Integration II
 
 - Here we are modifying the script to log content to syslog file itself
 - `import logging` support only 2 handlers, which is `Stream/File`, but in-order to log the information to syslog file you have import some other handlers as well
@@ -2053,8 +2068,9 @@ logger.error(logmessage)
 - If we used `SysLogHandler()` by default it prefix `Date/Time Stamp, hostname` like things
 
 In latest system, it gonna be `rsyslog`, so thinking that steps on the OS gonna be different.
+---
 
-**CGI I**
+#### CGI I
 
 [Common Gateway Interface]
 
@@ -2079,8 +2095,8 @@ print "</html>"
 Make it executable and call form the browser
 
 
-**CGI II**
-------------
+#### CGI II
+
 - Now we trying to setup a simple form
 - create file name called "form.py"
 
@@ -2123,7 +2139,8 @@ print "Hmm,", title, "ah....<br>"
 print "Is this your mail > ", email, "<br>"
 ```
 
-**Globbing**
+---
+#### Globbing
 
 - Kind of quick and dirty
 - Search against for file/directory search (I think so)
@@ -2190,4 +2207,3 @@ if search1:
 else:
   print "Boss, No Match"
 ```
-
