@@ -13,64 +13,62 @@ Part #2 Running a simple application
 - As of now on CentOS 7 , just install the Docker Engine from the official repository
 - And add any user to the group 'docker', so user can run commands over Docker
 
-`$ docker version`
-
+- `$ docker version`
 which displays the client/server information
  - 'docker' is a client side command line utility which calls the Docker Server/API to get the job DONE
 
-`$ docker run ubuntu /bin/echo "Hello World"`
+- `$ docker run ubuntu /bin/echo "Hello World"`
  which runs the 'ubuntu' image as container, as result it displays the "Hello World" and dies asap
 
-`$ docker run -t -i ubuntu /bin/bash`
+- `$ docker run -t -i ubuntu /bin/bash`
  Run the Ubuntu container, -t assign the psuedo tty, -i give that tty as INTERACTIVE with bash shell
 
-`$ docker run -d ubuntu:latest /bin/bash -c "while true; do echo Hello World; sleep 1; done` 
+- `$ docker run -d ubuntu:latest /bin/bash -c "while true; do echo Hello World; sleep 1; done` 
 -d daemonized it - will be running in the background for all the time
 
-`$ docker ps`
+- `$ docker ps`
  All running Docker Container information - that 7 Column info
 
-`$ docker ps -l`
+- `$ docker ps -l`
 Give me the recently ran Docker container information, `-l` last container that started.
 
-`$ docker ps -a`
+- `$ docker ps -a`
  Give all running/Stopped Docker container informtion
 
-`$ docker log <contain_name/id>`
+- `$ docker log <contain_name/id>`
  Which prints the All application log from the app container, ex: hello world on literally prints all echo output
 
-`$ docker stop <container_name>`
+- `$ docker stop <container_name>`
  It just stops the running container, just STOP
 
-`$ docker start <container_name>`
+- `$ docker start <container_name>`
  It just starts the application which is stopped above
 
-`$ docker run -d -P training/webapp python app.py`
+- `$ docker run -d -P training/webapp python app.py`
  `-P` which expose the some random port on Localhost for the container application
 
-`$ docker run -d -p 80:5000 training/webapp python app.py`
+- `$ docker run -d -p 80:5000 training/webapp python app.py`
 80 - localhost port, 5000 - Container application port
 
 Here we are manually assigning the port number to the container application
 
-`$ docker port nostalgic_morse 5000`
- 
- which will give the more information about the localhost port which mapped by `5000`
+- `$ docker port nostalgic_morse 5000`
+which will give the more information about the localhost port which mapped by `5000`
 
-`$ docker logs -f nostalgic_morse`
- -f is equivalant to <tail -f>, which is literally tails the application log from the Container app
+- `$ docker logs -f nostalgic_morse`
+ `-f` is equivalant to `<tail -f>`, which is literally tails the application log from the Container app
 
-`$ docker top <container_name>`
+- `$ docker top <container_name>`
  We can see all process which is running inside the application container
 
-`$ docker inspect <container_name>`
- ex:
-    `$ docker inspect nostalgic_morse`
+- `$ docker inspect <container_name>`
+ 
+ - ex:`$ docker inspect nostalgic_morse`
   which gives the very low level information about the Running container
   still we narrow down some specific required values from the application container
-  `$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nostalgic_morse`
+ - `$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nostalgic_morse`
 
-`$ docker rm <container-name>`
+- `$ docker rm <container-name>`
  basically its not possible remove container which is running, so we have to stop it first: still its possible to remove the running container by `docker rm -f'` flag
 
 Notes:
@@ -79,44 +77,46 @@ I have to explore the option, that changing the port mapping on demand
 #### Playing with Images
 - May some of the commands are repeated here
 
-`$ docker images`
+- `$ docker images`
  which displays the Docker image information
 
-`$ docker search <image_name>`
+- `$ docker search <image_name>`
  which does the search against the DockerHub for the images
 
-`$ docker pull <image_name>:<tag>`
+- `$ docker pull <image_name>:<tag>`
 which downloads the image from the Docker Hub
  ex:
+
 ```
 $ docker pull ubuntu:latest
 $ docker pull ubuntu:14.04
 ```
 
-`$ docker run -t -i ubuntu:14:04 /bin/bash`
+- `$ docker run -t -i ubuntu:14:04 /bin/bash`
  Running a specific version of Image as a container
 
-Creating your own image
-  1. With minor change
-  2. By using Dockerfile
+#### Creating your own image
+  - 1. With minor change
+  - 2. By using Dockerfile
 
  1~>
-    Pull any image
-    Install something
-    Note the hostname somewhere which os required while committing the changes [root@0b2616b0e5a8]
-    'Exit' out of the container
-    Run the following command then
+    - Pull any image
+    - Install something
+    - Note the hostname somewhere which os required while committing the changes [root@0b2616b0e5a8]
+    - 'Exit' out of the container
+    
+     - Run the following command then
 
-  `$ docker commit -m "Added json gem" -a "Kate Smith" 0b2616b0e5a8 ouruser/sinatra:v2`
-  `$ docker images`
+      `$ docker commit -m "Added json gem" -a "Kate Smith" 0b2616b0e5a8 ouruser/sinatra:v2`
+      `$ docker images`
 
 2~>
-    create some directory where do you wanna carry the operation
-    and create the create the 'Dockerfile' and give the  instructions or steps which needs t be performed
+    - create some directory where do you wanna carry the operation
+    - And create the create the 'Dockerfile' and give the  instructions or steps which needs t be performed
 
     `$ mkdir test && cd test && touch Dockerfile && vim Dockerfile`
 
-    Append the following content
+    - Append the following content
 
   ```
     # This is a comment
@@ -126,17 +126,18 @@ Creating your own image
     RUN export http_proxy=http://pkg.proxy.prod.jp.local:10080/ && gem install sinatra
   ```
 
-    Run the following command to start the build from it
+    - Run the following command to start the build from it
 
     `$ docker build -t test/name:v2 .`
         then watch for PASS/FAIL
 
 
- as image got created, set up the TAG for it
+ As image got created, set up the TAG for it
+ 
   `$ docker tag 5db5f8471261 ouruser/sinatra:devel`
   `$ docker images`
 
-- there is some talk about 'digests' that i dont understand as of now [content-addressable identifier called a digest]
+- There is some talk about 'digests' that i dont understand as of now [content-addressable identifier called a digest]
   `$ docker images --digests | head`
 
   Pushing the images to Docker Registry - which you don't care about it..!
