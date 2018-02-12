@@ -2,13 +2,11 @@ All about Docker Cli usages
 ---
 
 #### Intro
-Docker Commands that i understood and remember
 
 Some of the very Basic information Docker Engine that i've missed earlier, let me list it here the
 
-Topic:
-Part #1 Hello World in Container
-Part #2 Running a simple application
+
+#### PART [1|2] Hello World in Container & Running a simple application
 
 - As of now on CentOS 7 , just install the Docker Engine from the official repository
 - And add any user to the group 'docker', so user can run commands over Docker
@@ -96,27 +94,25 @@ $ docker pull ubuntu:14.04
  Running a specific version of Image as a container
 
 #### Creating your own image
-  - 1. With minor change
-  - 2. By using Dockerfile
+##### 1. With minor change
+  - Pull any image
+  - Install something
+  - Note the hostname somewhere which os required while committing the changes [root@0b2616b0e5a8]
+  - 'Exit' out of the container
+  
+  - Run the following command then
 
- 1~>
-    - Pull any image
-    - Install something
-    - Note the hostname somewhere which os required while committing the changes [root@0b2616b0e5a8]
-    - 'Exit' out of the container
-    
-     - Run the following command then
+  `$ docker commit -m "Added json gem" -a "Kate Smith" 0b2616b0e5a8 ouruser/sinatra:v2`
+  `$ docker images`
 
-      `$ docker commit -m "Added json gem" -a "Kate Smith" 0b2616b0e5a8 ouruser/sinatra:v2`
-      `$ docker images`
+##### 2. By using Dockerfile
 
-2~>
-    - create some directory where do you wanna carry the operation
-    - And create the create the 'Dockerfile' and give the  instructions or steps which needs t be performed
+  - create some directory where do you wanna carry the operation
+  - And create the create the 'Dockerfile' and give the  instructions or steps which needs t be performed
 
-    `$ mkdir test && cd test && touch Dockerfile && vim Dockerfile`
+  `$ mkdir test && cd test && touch Dockerfile && vim Dockerfile`
 
-    - Append the following content
+  - Append the following content
 
   ```
     # This is a comment
@@ -126,10 +122,9 @@ $ docker pull ubuntu:14.04
     RUN export http_proxy=http://pkg.proxy.prod.jp.local:10080/ && gem install sinatra
   ```
 
-    - Run the following command to start the build from it
+  - Run the following command to start the build from it
 
-    `$ docker build -t test/name:v2 .`
-        then watch for PASS/FAIL
+  `$ docker build -t test/name:v2 .` then watch for PASS/FAIL
 
 
  As image got created, set up the TAG for it
@@ -146,7 +141,9 @@ $ docker pull ubuntu:14.04
   `$ docker rmi training/sinatra`
   `$ docker rmi -f training/sinatra` [with force]
 
-#### 3 Docker Networking
+---
+
+#### PART 3 Docker Networking
 
 `$ docker run -d -P --name web training/webapp python app.py`
 - above command used to naming the container
@@ -200,13 +197,15 @@ from here if you are trying to ping the WEB contner u'll get 100% of packet loss
 To avoid the above scenario u can attach the 'my-bridge-network' to 'web' container by using the following command
  `$ docker network connect my-bridge-network web`
 
-#### 4 Managing data in Container
+---
+
+#### PART 4 Managing data in Container
 
 There are two primary ways,
 - Data volumes
 - Data volume containers
 
- ~> Data volumes
+##### Data volumes
  These are the special-designed directory
   Simple way
     - A random or specific directory from Docker host been getting mounted inside the docker container [by bypassing the UnionFS]
@@ -217,23 +216,29 @@ There are two primary ways,
     - By default it mounts with the RW mode
 
 
-Adding Random volume to container
+- Adding Random volume to container
+
 `$ docker run -d -P --name web -v /webapp training/webapp python app.py`
+
   - This will create a new volume inside a container at /webapp
   - if the directory /webapp already exists & some data is available then it does overlay & get the HOST content into the CONTAINER
   - It will good to specify the ABSOLUTE path on the Docker engine, else it will create volume for the NAME that you have supplied
   - MUST/Always use ABSOLUTE path for the container specific one [meant container folder]
 
 
-Inspecting
+- Inspecting
+
 `$ docker inspect web`  check the MOUNTS area
 
-Mounting the Host directory as data volume
+- Mounting the Host directory as data volume
+
 `$ docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py`
 
   - in the both place if the directory doesn't exists, its crates the directory for you
   - By default it mounts the host volume with 'rw' permission
-  ~> Use blow command to mounts it has 'ro' only
+
+  ~> Use blow command to mounts it has `ro` only
+
   `$ docker run -d -P --name web -v /src/webapp:/opt/webapp:ro training/webapp python app.py`
 
   There is a STORY if you use MAC/WIN32 based you just shared/mount the directory like Linux
@@ -241,11 +246,12 @@ Mounting the Host directory as data volume
 
 Shared storages can be mounted [NFS/iSCSI/FC] inside the containers by using the plugins in Docker & Container side [Citation required]
 
-~~> by using the Volume Drivers
+**by using the Volume Drivers**
+
  which means mount the Docker host directory with additional driver information
  Its like creating the volume using dd command and format & use it
 
-##### Warning
+**Warning**
 In Dockerfile, you can't use the HOST directory to mount inside the container as specifies above.
 because built images should be portable. A host directory wouldn’t be available on all potential hosts
 
