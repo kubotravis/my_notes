@@ -11,8 +11,8 @@ Key things what you should pick
   3. Provision you server - Select the Operation system and configuration -medium, large & etc
   4. Configure your service - web, db, media streaming & etc
   5. Expand to other availability zone
-     (i) Purpose: serve the same service to different region
-     (ii) Advantage : Reduce the latency & high avail too.
+     - (i) Purpose: serve the same service to different region
+     - (ii) Advantage : Reduce the latency & high avail too.
 
   6. Expand to other region - Giving the service to different regions
 
@@ -82,3 +82,32 @@ Below are called core services of AWS - i can say it.
 
 The free tier:
   - For more info http://aws.amazon.com/free
+
+
+### 03 -  Creating an EC2 instances - AMI Selection
+
+**Key Concepts:**
+1. Accessing the AWS Management Console
+2. Choosing AMI (Amazon Machine Instance)
+3. Understanding the EC2 pricing models
+
+**Key Notes:**
+  1. Sing-up and get the account & login to Management console
+  2. Select your/nearby region
+  3. Check for the availability zone
+  4. AMI (Amazon Machine Instance)
+     - A running server 
+     - Basically build/developed by Amazon and frozened long time as a HDD format, You go and just kick that server, up & run.
+  5. When creating an Instance, Amazon takes care of it License.
+     - You no need to pay full license amount or you get paid by hours of usage, its nature way of AWS
+
+**Steps-Better do it yourself**
+
+- SignUp ->Management Console
+  - -> Select Region->Launch Instance
+  - -> Select AMI 'AWS' (AMI from Quick Start/MyAMI/Community) -> Continue
+  - -> Enter the No.of Instance
+  - -> Instance type (Micro Instance Doesnt charge-falls under Free Tier)
+  - -> And Done
+ 
+ **Note** : There is something "Request Spot Instance" which will be convered in next chapter also about Core/CPU/Mem stuff too.
