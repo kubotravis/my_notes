@@ -238,7 +238,7 @@ Ex:
 - Private key has the only capability to do de-cryption
 - This is how almost all secure channel communication works
 
-### 08- Creating an EC3 Instance (Security Groups)
+### 08 - Creating an EC3 Instance (Security Groups)
 **Key Concepts:**
 - Inbound Filtering for your AMI's
 - `"Security Groups"`
@@ -285,5 +285,5 @@ Ex:
 - Main purpose is that, we are not expose the DB server to anybody apart from Webservers
 
 **Notes:**
-- "world of Worldcraft" server port configuration - check that out
+- `"World of Worldcraft"` server port configuration - check that out
 - You should have the knowledge about Subnetmasking too
