@@ -319,7 +319,7 @@ Ex:
 - Define the Load Balancer
   - Setting up the source of the service/port on LB side & setup the service/port on the actual AMI server side
   - Configure Health Check
-    - Setting up the LB configuration for the service 
+    - Setting up the LB configuration for the service
       ```
       {
       Config Options:
@@ -334,7 +334,7 @@ Ex:
       }
       ```
 - Add EC2 Instances
-  - Just select your AMI's which should go under LB 
+  - Just select your AMI's which should go under LB
 - Review
   - Review & Create
 
@@ -342,7 +342,7 @@ Ex:
 - For LB to AMI's, AWS by-default creates an DNS record - you no need to create
 
 - Pricing
-  - Charged for per Hour / Per 1 GB data crosses on LB  
+  - Charged for per Hour / Per 1 GB data crosses on LB
 
 - Stuff of ELB
   - -> Select the Description of the LB for more DNS stuff
@@ -353,9 +353,9 @@ Ex:
     - By clicking an edit option near by the Stickness, you can setup the values.
   - -> The best part of ELB is you can setup it across the availbility zone (us-west-1a & us-east-1c) not only for AMI's
   - -> ELB securty group managed by AWS itself (Security tab under  ELB), but still you can modify it under listener tab
-  - -> OK, how HTTPS traffic managed by AWS - it's pretty simple. 
+  - -> OK, how HTTPS traffic managed by AWS - it's pretty simple.
   AWS setup SSL certificate till only ELB. ELB to all AMI's connection are HTTP only, because each server handles HTTPS load will be heavy , cotilier too.
-  also the thing is that "ELB to AMI" considered as trusted space. (inside the AWS network stuff) 
+  also the thing is that "ELB to AMI" considered as trusted space. (inside the AWS network stuff)
 
 **Handling the HTTPS**
 - Imagine that your LB also has SSL, you webserver (AMI's) also has SSL, then how traffice managed !!
