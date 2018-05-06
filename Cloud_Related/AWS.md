@@ -237,3 +237,53 @@ Ex:
 - On the bank they decypt using the their Privatkey
 - Private key has the only capability to do de-cryption
 - This is how almost all secure channel communication works
+
+### 08- Creating an EC3 Instance (Security Groups)
+**Key Concepts:**
+- Inbound Filtering for your AMI's
+- `"Security Groups"`
+- Rules - Inbound/outbound/Within the group
+- Can't change the Security Group (Rules - Without VPC) - I guess u can now
+
+- On other words, its a building an Firewall for your AWS
+
+**My Understanding so FAR**
+- Security Group is the one of the step you have to fill when you are creating an AMI (Last question/step berfore getting in got Review)
+- It's a setting which is applied to an group
+- What is Group ? - Is multiple no.of AMI's, also one only AMI can be a part of group
+- Its not changeable once its applied to an group (Without VPC-w'll talk about later)
+- If you want you can create your brand new custom rules, that will appear all the time while creating an AMI's
+
+- The options you will see while creating an AMI at Security Group tab
+  - YOUR Custome Security Group (Set of rules) 
+  - Default (Only Outbound no Inbound but Each AMI can communicate fully)
+  - Linux Default (SHH) 
+  - Quick-start-1 ~> This is the default security group for windows server which is assigned by AWS
+
+- Cannot Modify, What ? (IN terms of Security Group)
+  - That means you can update rule which already defined, but you can simply delete and add which you want - little pain
+
+- Can't change, what ? (IN terms of AMI)
+  - Once you have selected any Security Group to any AMI and it up and running, you can't change the security group for that AMI unless if you are inside the VPC
+
+- What you should aware ! (IN terms of Security Group)
+  - If you are creating a Security group for each AMI's, that means you are more than one Security gruoup
+  - You know that AMI's inside an one single Security group can communicate each other but not outside, so you have create a seperate rule in each Security group to communicate other security groups
+  
+- So, How can make security group communicate each other ?
+  - Imagine that you have 2 security group, naming that `TEST-1 &TEST-2`
+  - In order to make communicate each other, select any one of the group (TEST-1) and got edit
+  - Add custom rule forInbound in ALL TCP
+  - Select the "Source" as TEST-2 (it will get updated by its groupid)
+  - And save/apply the changes to take effect
+
+**Real time eaxmaples, how to design ?**
+- Imagine that you are serving an web server for the world.
+- Those web servers are connected to DB server for saving the transactions
+- So in the above case DB servers are suposed to be in different security group, to be apart from the Web servers
+- There will rule on Web/DB sevrer side to allow only inbount connection to the DB, not the outbound
+- Main purpose is that, we are not expose the DB server to anybody apart from Webservers
+
+**Notes:**
+- "world of Worldcraft" server port configuration - check that out
+- You should have the knowledge about Subnetmasking too
