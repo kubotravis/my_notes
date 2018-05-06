@@ -209,7 +209,7 @@ Basic Concepts
 
 - -> AWS style of Private/Public key pair mechanism
   - While creating the AMI's you define the Key, and you will get download option on the Private key - Means that as you generate the AMI's you will get the Private Key
-- -> ON Windows 
+- -> ON Windows
   - Once you created the Windows AMI, you need to get the default Admin password the downloaded private key (adasd.pem), How ?
   - Right click on the running windows `AMI -> Get password -> export the downloaded key -> RDP to the windows server -> Reset pasword` (That's easy right...)
   - Baically we exported the Private key then you got the User/Pass to login
@@ -225,7 +225,7 @@ Basic Concepts
 - Lose key ?
   - On windows/Linux - That is it you are locked out of your AMI - Amazon can't to do anything, So you have to terminate the AMI.
   - But you dont want to lose the DATA, better you can create your own AMI image of it, and create new instance of it.
-  - If you remember, while creating the AMI, saying that "My AMI"; over there your backed up AMI image will be listed  
+  - If you remember, while creating the AMI, saying that "My AMI"; over there your backed up AMI image will be listed
 
 **FYI :**
 How the secure communication works in the realtime ?
