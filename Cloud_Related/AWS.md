@@ -287,3 +287,83 @@ Ex:
 **Notes:**
 - `"World of Worldcraft"` server port configuration - check that out
 - You should have the knowledge about Subnetmasking too
+
+### 08 - Creating an EC2 Instances - Elastic IPs and ELB
+
+**EIP**
+
+- Elastic IP
+  - By default AWS sets up the 'Public DNS' (ser.23.34.34.56-awsservice.com) to AMI's - using that we usually connect to the instances what you seen above (Generate key pair & connnect)
+  - Elastic IP is the concept of applying the Public IP to the AMI's
+
+- How set EIP ?
+  - On the left side of the panel & select "Elastic IP" and select the "Allocate New Address", then select EIP usage (EIP or VPC) - then say "Yes, Allocate"
+  - Then select the EIP and click on the "Associate Address" and select the "Instance"
+  - That is it, we have got the EIP for the AMI's
+  - BTW, you will be getting paid by some Dollars
+
+**ELB**
+
+- Load Balancer setup
+  - Traditional setup
+  ```
+                        Server-1
+    Internet -> Firewall -> Foundry-> ......Server-2
+                        Server-3
+  ```
+  - Incoming req from Internet `->` Firewall has the Public IP `->` Load balancer (firewall converts all PublicIP to PrivateIP for LB) `->` Balanced load to the servers (AMI's)
+
+**How AWS does the LB (EB) ?**
+
+3 Steps:
+- Define the Load Balancer
+  - Setting up the source of the service/port on LB side & setup the service/port on the actual AMI server side
+  - Configure Health Check
+    - Setting up the LB configuration for the service 
+      ```
+      {
+      Config Options:
+        Ping Protocol-HTTP
+        Ping Port-80
+        Ping Path-/index.html
+      Advanced Options:
+        Response Timeout: 5 Secs  # count 1 if the response time more than 5 secs
+        Health Check Interval: 0.1 Mis  # time interval of service ping req
+        Unhealthy Threshold: 2   # s-out from the LB loss of 2 loss of reponse time
+        Healthy Threshold: 10   # s-on after 10 success of ping while in s-out
+      }
+      ```
+- Add EC2 Instances
+  - Just select your AMI's which should go under LB 
+- Review
+  - Review & Create
+
+- Additionally its fully modify/update later
+- For LB to AMI's, AWS by-default creates an DNS record - you no need to create
+
+- Pricing
+  - Charged for per Hour / Per 1 GB data crosses on LB  
+
+- Stuff of ELB
+  - -> Select the Description of the LB for more DNS stuff
+  - -> Don't create the A record becuse the IP will change during the reboot,so create CNAME record instead of A record
+  - -> One of the load balancer feature is stickyness, you can find it under "Load Balancer -> Description -> Port Configuration -> Stickyness"
+    - What is stickyness?
+      - When user hits LB, he will redirected to any one the AMI to get the service. For that user setup cookie & timeout to reach/connect all time the same AMI's which he/she hits at the very first time. but its breaking the purpose of LB.
+    - By clicking an edit option near by the Stickness, you can setup the values.
+  - -> The best part of ELB is you can setup it across the availbility zone (us-west-1a & us-east-1c) not only for AMI's
+  - -> ELB securty group managed by AWS itself (Security tab under  ELB), but still you can modify it under listener tab
+  - -> OK, how HTTPS traffic managed by AWS - it's pretty simple. 
+  AWS setup SSL certificate till only ELB. ELB to all AMI's connection are HTTP only, because each server handles HTTPS load will be heavy , cotilier too.
+  also the thing is that "ELB to AMI" considered as trusted space. (inside the AWS network stuff) 
+
+**Handling the HTTPS**
+- Imagine that your LB also has SSL, you webserver (AMI's) also has SSL, then how traffice managed !!
+- First define the SLB rule that => `LoadBalancer 443 HHTPS port -> AMI instance HTTPS 443`
+- Basically encrypted incoming traffic reaches the ELB, then ELB re-ecncrypt the traffic again then sents it to the AMIS's - here the 2 time encryption is waste - so why it's happens
+- ELB wants to setup the stickness, that is the reason it re-encrypts traffic. because through the re-encytion only ELB comes to know which user accessing which AMI's
+- If you dont want to do the dual encryption, just update ELB rule as `TCP & 443` in both source and service in AMI's - in this case ELB simply forwards traffic based on Roundrobin, here there is no Stickyness at all
+- Like above point - when ELB rile says that `SSL (Secure TCP 443 - LB - Http to AMI's)`
+- You can also update the SSL ertificate by clicking on the change button [Copy paste stuff] & you can import certificate from the vendor also.
+- Cipher option also you can check
+- If there is SSL encrypted traffic coming into ELB and just forwarding those to AMI (without re-encrypt), that means there is no Stickness
