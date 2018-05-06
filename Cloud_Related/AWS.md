@@ -116,23 +116,23 @@ The free tier:
 
 **Notes:**
 1. On-Demand Instance pricing - No Commit
-   -> Just walkin into AWS and grab the Xtra large server and run  for hour and shutdown so will get paid for that hour only - No commit - just like that - most people used to do.
-   -> Note that per hour charge will change by region - it will vary
-   -> Also you may get charged if you are using other than ephimiral storage (S3/EBS will cost you)
+   - -> Just walkin into AWS and grab the Xtra large server and run  for hour and shutdown so will get paid for that hour only - No commit - just like that - most people used to do.
+   - -> Note that per hour charge will change by region - it will vary
+   - -> Also you may get charged if you are using other than ephimiral storage (S3/EBS will cost you)
 
-2. Reserved Instance Princing - Better than the On-Demand
-   -> You have to pay some down payment, so that you will end up with paying less money fo the AMI's
-   -> Down payment depends on the size(micro-small-medium-large-xtralarge)/utilization(light-medium-heavy)/region of AMI
-   -> Refer the AWS pricing - it has more info
-   -> A suggested model for the Horizontal scalling
-   -> Basically in here pricing model based on, how long youa are running in the AMI
+2. Reserved Instance Pricing - Better than the On-Demand
+   - -> You have to pay some down payment, so that you will end up with paying less money fo the AMI's
+   - -> Down payment depends on the size(micro-small-medium-large-xtralarge)/utilization(light-medium-heavy)/region of AMI
+   - -> Refer the AWS pricing - it has more info
+   - -> A suggested model for the Horizontal scalling
+   - -> Basically in here pricing model based on, how long youa are running in the AMI
 
 3. Spot Instance Pricing
-   -> Its a almost like gambling
-   -> The left over CPU/MEM out bit by you for some dollars, if some one bit more than you then your AMI's goes down and theirs gets up
-   -> This is suitable for the Video streaming service , TV's and others
-   -> When you AMI goes due to your low bit, then what about date then ?  Still persistance
-   -> Basically one demand you scaling your anv based on Bid
-   -> Saying that great idea, but explore it more - From AWS site
+   - -> Its a almost like gambling
+   - -> The left over CPU/MEM out bit by you for some dollars, if some one bit more than you then your AMI's goes down and theirs gets up
+   - -> This is suitable for the Video streaming service , TV's and others
+   - -> When you AMI goes due to your low bit, then what about date then ?  Still persistance
+   - -> Basically one demand you scaling your anv based on Bid
+   - -> Saying that great idea, but explore it more - From AWS site
 
 Winning model - Reserved Instances
