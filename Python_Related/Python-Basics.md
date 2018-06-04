@@ -397,7 +397,7 @@ Interactive Shell doesn't required the "print" to return value but script EXPLIC
 
 ---
 
-#### Lists I
+#### List I
 - Which is used to allow store in the "String,int, whatever" values in comma separated list & gives access to them
 - List should declared inside the `[]` with `","` separated values
 - anything quoted within `""` are considered as strings
