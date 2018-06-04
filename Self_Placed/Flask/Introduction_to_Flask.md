@@ -6,7 +6,7 @@ Introduction to Flask
 - [1. Set Up](https://github.com/kubotravis/my_notes/blob/master/Self_Placed/Flask/Introduction_to_Flask.md#1-set-up)
 - [2. Simple Hello World Application](https://github.com/kubotravis/my_notes/blob/master/Self_Placed/Flask/Introduction_to_Flask.md#2-simple-hello-world-application)
 - [3. Introduction to Templates](https://github.com/kubotravis/my_notes/blob/master/Self_Placed/Flask/Introduction_to_Flask.md#3-introduction-to-templates)
-- [4. Using Jinja2 Templates](https://github.com/kubotravis/my_notes/blob/master/Self_Placed/Flask/Introduction_to_Flask.md#3-using-jinja2-templates)
+- [4. Using Jinja2 Templates](https://github.com/kubotravis/my_notes/blob/master/Self_Placed/Flask/Introduction_to_Flask.md#4-using-jinja2-templates)
 ----
 
 #### 1. Set Up
