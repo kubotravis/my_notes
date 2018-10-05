@@ -4,16 +4,16 @@ Ansible Reference Notes
 ### Table of Contents
 [1. Introduction](https://docs.ansible.com/ansible/latest/index.html)
 
-[2. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#1-architecture--process-flow)
+[2. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#2-architecture--process-flow)
 
-[3. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#2-creating-an-environment)
+[3. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#3-creating-an-environment)
 
-[4 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#3-ansible-inventory-and-configuration)
+[4 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#4-ansible-inventory-and-configuration)
 
 [5. Modules](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#5-modules)
 
 ---
-### 1. Architecture & Process flow
+### 2. Architecture & Process flow
 
 **Control server**
 
@@ -489,3 +489,214 @@ Target Pattern
 
 `$ ansible all -i exp/inventory_exp -m setup --tree ./setup`
   all node information will dumped under setup directory
+
+---
+
+### 6. Plays and Playbook
+
+Playbooks - Ultimate Automated tasks list
+
+Basics - Kind of Glue brings all things together
+
+`Playbook contains-> Multiple Play contains-> Multiple TASKS ->Target Group/set of Groups`
+
+- Playbook execution happens top to bottom
+- If any host fails in the task execution, it will not perform rest of the TASKS on the target server; Basically it will add the `FAILED` target to `RE_TRY` file/list
+   - just by using the "--limit" option with ansible will ONLY execute against the FAILED nodes again
+   - `MODULE.retry` file will be place on under HOME, this location can be configured in the CFG file.
+
+
+**What playbook contains**
+ 1) Target list (may be host/group name)
+ 2) Actual Tasks
+ 3) Repeats the same
+
+**Exec:**
+```
+  $ ansible-playbook playbook.yml
+    - assumes that INVEMTORY files is already mentioned in the configuration file, else please pass the inventory file name with '-i' option
+  $ ansible-playbook -i inventory playbook.yml
+```
+
+**First Playbook Demo**
+
+below is my sample palybook
+
+```
+---
+- hosts: webservers
+  sudo: yes
+
+  tasks:
+  - name: Install Apache Server
+    yum: name=httpd state=present
+
+  - name: Start And Enable Apache
+    service: name=httpd enable=yes state=started
+
+- hosts: db
+  sudo: yes
+
+  tasks:
+  - name: Install MySQL server
+    yum: name=mysql-server state=present
+
+  -name: Start MySQL server
+   service: name=mysqld state=started
+
+- hosts: webserver:db
+  sudo: yes
+
+  tasks:
+  - name: Stop IPTABLE
+    service: name=iptables state=stopped
+
+```
+
+**RHEL 7 based**
+
+```
+---
+- hosts: webservers
+  sudo: yes
+
+  tasks:
+  - name: Install Apache Server
+    yum: name=httpd state=present
+
+  - name: Start And Enable Apache
+    service: name=httpd enabled=yes state=started
+
+- hosts: db
+  sudo: yes
+
+  tasks:
+  - name: Install MySQL server
+    yum: name=mariadb-server state=present
+
+  - name: Start MySQL server
+    service: name=mariadb state=started
+
+- hosts: webservers:db
+  sudo: yes
+
+  tasks:
+  - name: Stop IPTABLE
+    service: name=firewalld state=stopped
+```
+
+ - `$ ansible-playbook web_db.yaml`
+
+ - `$ ansible-playbook web_db.yaml --limit $web_db.retry`
+  - does only execution against the FAILED target servers
+
+**Playbook and Logic and More**
+
+**INCLUDE**
+  - There is `include/include_vars` directive you call in playbook to point the some YAML file where it can look for TASK/VAR & etc which gives the flexibility to breakdown the playbook
+
+**REGISTER**
+  - Using the one task output to another task, or you can make decision based on previous play execution by using `REGISTER` class
+    - Using the register you can record the play output & you can reuse
+    - Also can used to identify the success and failure of the previous task
+
+**DEBUG**
+  - `Debug` modules helps more for troubleshooting purpose
+    - debug - accepts only two parameters `["msg", "var"]` which goes "full string msg to the user" & "output the result of the variable"
+    - Playbook don't have to be static
+
+**PROMPT**
+  - `prompt` module will prompt for the any input that you wanna inject in the playbook to run, basically entering fields are become invisible (like password)
+
+**HANDLERS**
+  - Some called `handlers` does any changes/actions based on ANOTHER thing on the system that you have defined in the playbook [in chef 'only_if' "not_if"]
+    - There are some condition on HANDLER tasks
+      - It will executed after all task been executed/completed
+      - And it will executed at only ONCE [No matter how many times you call]
+
+**EXE CONDITION**
+  - just by using the "when" clause [like in chef]
+
+**COND CLAUSE based on OUTPUT**
+  - ignoring the error and executing the playbook further
+
+**TEMPLATED**
+   - by using the `jinja2` engine place the you values based exec to target
+     "sdfsd.j2 to file.cfg/any" [in chef erb -> to any files]
+
+**Advanced Playbook usage**
+
+- Here we are going to play around with tamplete(file copy j2), notify, handlers
+- Will start editing the previously created playbook
+
+- Create a directory called "template" we used this one place out j2 templates
+
+- create a file name called "index.js" with following cotent
+```
+  <html>
+  <title>Ansibel</title>
+  <body>
+  <head>Hello from Ansible </head>
+  <H1> well, Its's working </H1>
+  <p> Yo ! {{ username }} !!  Wassup </p>
+  </body>
+  </html>
+```
+
+Content: web_db.yaml
+```
+- hosts: webservers
+  sudo: yes
+  vars:               # -> these are the var/values that we are going to use in the http.conf.j2/index.j2 template files (as attribute to erb template in chef)
+    http_port: 80
+    doc_dir: /ansible/
+    doc_root: /var/www/html
+    max_clients: 5
+
+  vars_prompt:        # -> Still you can promt anything while running the playbook & that values can used in the j2 template
+    - name: username
+      prompt: What's your Name, Yo ?
+
+  tasks:
+  - name: Install Apache Server
+    yum: name=httpd state=present
+    when ansible_os_family == "Redhat"      # -> Here we are telling that RUN this task only WHEN the os family is REDHAT
+
+  - name: Start And Enable Apache
+    service: name=httpd enabled=yes state=started
+    when: ansible_os_family == "Redhat"
+
+  - name: Copy the INDEX data
+    template: src=template/index.js dest=dest={{ doc_root }}/index.html   # -> in order to copy the local template from the Ansible server to TARGET, also we user the VARS
+    notify:                               # -> If this task's "changed=true" then notify the handlers to continue {here handler will restart the httpd}
+      - Restart Apache                    # -> Spell correctly & its case sensitive (same as handlers name anyway)
+
+  handlers:                           # -> This is the handler module, takes the action based on the above notify modules
+    - name: Restart Apache
+      service: name=httpd state=restarted
+
+- hosts: db
+  sudo: yes
+
+  tasks:
+  - name: Install MySQL server
+    yum: name=mariadb-server state=present
+
+  - name: Start MySQL server
+    service: name=mariadb state=started
+
+- hosts: webservers:db
+  sudo: yes
+
+  tasks:
+  - name: Stop IPTABLE
+    service: name=firewalld state=stopped
+```
+
+- let run the above ansible playbook
+- Expectation it only supposed to copy the files & restart the apache(httpd), since the ENV already has the required packages & service up and running
+
+```$ ansible-playbook web_db.yaml
+PLAY RECAP *********************************************************************
+exp-jslave401z             : ok=6    changed=2    unreachable=0    failed=0
+```
