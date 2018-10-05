@@ -4,13 +4,15 @@ Ansible Reference Notes
 ### Table of Contents
 [1. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#1-architecture--process-flow)
 
-[2. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#2-creating-an-environment)
+[2. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#1-architecture--process-flow)
 
-[3 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#3-ansible-inventory-and-configuration)
+[3. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#2-creating-an-environment)
+
+[4 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#3-ansible-inventory-and-configuration)
 
 [5. Modules](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#5-modules)
 
-
+---
 ### 1. Architecture & Process flow
 
 **Control server**
@@ -72,9 +74,9 @@ There are TWO execution types
 - remote (default): remote execution
 - local: local ansible server executing the playbook
 [Local execution is pretty typical execution though, since the python package cant be received by default for local server, for that u have to make HTTP/REST call to execute on the local ]
+---
 
-
-### 2. Creating an Environment
+### 3. Creating an Environment
 
 LAB - Setup the 3 vm by using the vagrant (acs,web,db)
 
@@ -166,8 +168,8 @@ Acutally you NO need to use the `-m command` to specify module because its defau
 - Well there is another module call `Shell`, where you can execute the shell commands.
 - So, what is the difference in command & shell modules ?
   Shell module support ENVIRONMENT vairables (HOME,USER,PWD & others) where `command` moduls doesn't support.
-
-### 3 Ansible Inventory and Configuration
+---
+### 4 Ansible Inventory and Configuration
 
 **Inventory fundamentals**
 - Basically inventory file can be at anywhere in the files system
@@ -360,8 +362,7 @@ host_key_checking=False
 ```
  - now if you run any ansible command to check the HOST related it will work
  - Also it appends the TARGET fingerprint in to the ~/.ssh/known_host too in background silently
-
-- EX-2
+ - EX-2
 
  - export the following to check the failure case above scenarion
   `$ export $ANSIBLE_HOST_KEY_CHECKING=True`
@@ -377,6 +378,8 @@ $ vim invetory
 ```
 
 ***Note:*** Above talks with base system that which you run ansible commands. There are support to Python3 ont the both the end. Yet to chaeck the Docs page.
+
+---
 
 ### 5. Modules
 
