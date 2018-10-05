@@ -14,6 +14,8 @@ Ansible Reference Notes
 
 [6. Plays and Playbook](https://github.com/kubotravis/my_notes/blob/master/Ansible_Related/ansible-notes.md#6-plays-and-playbook)
 
+[7. Roles](https://github.com/kubotravis/my_notes/blob/master/Ansible_Related/ansible-notes.md#7-roles)
+
 ---
 
 ### 2. Architecture & Process flow
@@ -719,6 +721,7 @@ exp-jslave401z             : ok=6    changed=2    unreachable=0    failed=0
 **Role Basics**
  - ROLE has pre-defined directory structure, something like below
 
+```
  ── roles
     ├── builders
     ├── server-common
@@ -730,7 +733,7 @@ exp-jslave401z             : ok=6    changed=2    unreachable=0    failed=0
     │   ├── templates
     │   └── vars
     └── webservers
-
+```
  - From above you no need to required all the directories, for ex if you dont use "handlers" you can remove & same as all servers
  - Now you no need "REFERNCE" on your play, ex: for copy files yoy no need of absolute path of the SOURCE cuz it automatically picked from the `files` directory
  - Every directory has the `main.yaml` where you have to place the content [in chef "default.rb"], and its not necessary that you have use `main.yaml` only
@@ -741,7 +744,7 @@ exp-jslave401z             : ok=6    changed=2    unreachable=0    failed=0
  - `site.yaml` file holds the your infra details & again you can have different files like and call them using the "include/directive"
  - `site.yaml` you can use `tag` to execute the playbook against that "TAG" 'ed infra
 
-- **PRE/POST tasks**
+**PRE/POST tasks**
     You cam make use like, remove web server from SLB and so operation later put them back to the SLB
     Or During any operation you can silence the MONITORING alarm & bring it back once it done
 
