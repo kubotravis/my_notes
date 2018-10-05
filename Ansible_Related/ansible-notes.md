@@ -4,15 +4,18 @@ Ansible Reference Notes
 ### Table of Contents
 [1. Introduction](https://docs.ansible.com/ansible/latest/index.html)
 
-[2. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#2-architecture--process-flow)
+[2. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible_Related/ansible-notes.md#2-architecture--process-flow)
 
-[3. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#3-creating-an-environment)
+[3. Creating an Environment](https://github.com/kubotravis/my_notes/blob/master/Ansible_Related/ansible-notes.md#3-creating-an-environment)
 
-[4 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#4-ansible-inventory-and-configuration)
+[4 Ansible Inventory and Configuration](https://github.com/kubotravis/my_notes/blob/master/Ansible_Related/ansible-notes.md#4-ansible-inventory-and-configuration)
 
-[5. Modules](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#5-modules)
+[5. Modules](https://github.com/kubotravis/my_notes/blob/master/Ansible_Related/ansible-notes.md#5-modules)
+
+[6. Plays and Playbook](https://github.com/kubotravis/my_notes/blob/master/Ansible_Related/ansible-notes.md#6-plays-and-playbook)
 
 ---
+
 ### 2. Architecture & Process flow
 
 **Control server**
@@ -502,7 +505,7 @@ Basics - Kind of Glue brings all things together
 
 - Playbook execution happens top to bottom
 - If any host fails in the task execution, it will not perform rest of the TASKS on the target server; Basically it will add the `FAILED` target to `RE_TRY` file/list
-   - just by using the "--limit" option with ansible will ONLY execute against the FAILED nodes again
+   - just by using the `--limit` option with ansible will ONLY execute against the FAILED nodes again
    - `MODULE.retry` file will be place on under HOME, this location can be configured in the CFG file.
 
 
@@ -585,15 +588,17 @@ below is my sample palybook
     service: name=firewalld state=stopped
 ```
 
- - `$ ansible-playbook web_db.yaml`
-
- - `$ ansible-playbook web_db.yaml --limit $web_db.retry`
+```
+  $ ansible-playbook web_db.yaml
+  $ ansible-playbook web_db.yaml --limit $web_db.retry
+```
   - does only execution against the FAILED target servers
+
 
 **Playbook and Logic and More**
 
 **INCLUDE**
-  - There is `include/include_vars` directive you call in playbook to point the some YAML file where it can look for TASK/VAR & etc which gives the flexibility to breakdown the playbook
+  - There is `include/include_vars` directive you call in playbook to point the some YAML file where it can look for TASK/VAR & etc - which gives the flexibility to breakdown the playbook
 
 **REGISTER**
   - Using the one task output to another task, or you can make decision based on previous play execution by using `REGISTER` class
@@ -629,69 +634,70 @@ below is my sample palybook
 - Here we are going to play around with tamplete(file copy j2), notify, handlers
 - Will start editing the previously created playbook
 
-- Create a directory called "template" we used this one place out j2 templates
+- Create a directory called `template` we used this one place out j2 templates
 
-- create a file name called "index.js" with following cotent
-```
-  <html>
-  <title>Ansibel</title>
-  <body>
-  <head>Hello from Ansible </head>
-  <H1> well, Its's working </H1>
-  <p> Yo ! {{ username }} !!  Wassup </p>
-  </body>
-  </html>
-```
+- create a file name called `index.j2` with following cotent
+  ```
+    <html>
+    <title>Ansibel</title>
+    <body>
+    <head>Hello from Ansible </head>
+    <H1> well, Its's working </H1>
+    <p> Yo ! {{ username }} !!  Wassup </p>
+    </body>
+    </html>
+  ```
 
-Content: web_db.yaml
-```
-- hosts: webservers
-  sudo: yes
-  vars:               # -> these are the var/values that we are going to use in the http.conf.j2/index.j2 template files (as attribute to erb template in chef)
-    http_port: 80
-    doc_dir: /ansible/
-    doc_root: /var/www/html
-    max_clients: 5
+**Content: web_db.yaml**
 
-  vars_prompt:        # -> Still you can promt anything while running the playbook & that values can used in the j2 template
-    - name: username
-      prompt: What's your Name, Yo ?
-
-  tasks:
-  - name: Install Apache Server
-    yum: name=httpd state=present
-    when ansible_os_family == "Redhat"      # -> Here we are telling that RUN this task only WHEN the os family is REDHAT
-
-  - name: Start And Enable Apache
-    service: name=httpd enabled=yes state=started
-    when: ansible_os_family == "Redhat"
-
-  - name: Copy the INDEX data
-    template: src=template/index.js dest=dest={{ doc_root }}/index.html   # -> in order to copy the local template from the Ansible server to TARGET, also we user the VARS
-    notify:                               # -> If this task's "changed=true" then notify the handlers to continue {here handler will restart the httpd}
-      - Restart Apache                    # -> Spell correctly & its case sensitive (same as handlers name anyway)
-
-  handlers:                           # -> This is the handler module, takes the action based on the above notify modules
-    - name: Restart Apache
-      service: name=httpd state=restarted
-
-- hosts: db
-  sudo: yes
-
-  tasks:
-  - name: Install MySQL server
-    yum: name=mariadb-server state=present
-
-  - name: Start MySQL server
-    service: name=mariadb state=started
-
-- hosts: webservers:db
-  sudo: yes
-
-  tasks:
-  - name: Stop IPTABLE
-    service: name=firewalld state=stopped
-```
+  ```
+  - hosts: webservers
+    sudo: yes
+    vars:               # -> these are the var/values that we are going to use in the http.conf.j2/index.j2 template files (as attribute to erb template in chef)
+      http_port: 80
+      doc_dir: /ansible/
+      doc_root: /var/www/html
+      max_clients: 5
+  
+    vars_prompt:        # -> Still you can promt anything while running the playbook & that values can used in the j2 template
+      - name: username
+        prompt: What's your Name, Yo ?
+  
+    tasks:
+    - name: Install Apache Server
+      yum: name=httpd state=present
+      when ansible_os_family == "Redhat"      # -> Here we are telling that RUN this task only WHEN the os family is REDHAT
+  
+    - name: Start And Enable Apache
+      service: name=httpd enabled=yes state=started
+      when: ansible_os_family == "Redhat"
+  
+    - name: Copy the INDEX data
+      template: src=template/index.js dest=dest={{ doc_root }}/index.html   # -> in order to copy the local template from the Ansible server to TARGET, also we user the VARS
+      notify:                               # -> If this task's "changed=true" then notify the handlers to continue {here handler will restart the httpd}
+        - Restart Apache                    # -> Spell correctly & its case sensitive (same as handlers name anyway)
+  
+    handlers:                           # -> This is the handler module, takes the action based on the above notify modules
+      - name: Restart Apache
+        service: name=httpd state=restarted
+  
+  - hosts: db
+    sudo: yes
+  
+    tasks:
+    - name: Install MySQL server
+      yum: name=mariadb-server state=present
+  
+    - name: Start MySQL server
+      service: name=mariadb state=started
+  
+  - hosts: webservers:db
+    sudo: yes
+  
+    tasks:
+    - name: Stop IPTABLE
+      service: name=firewalld state=stopped
+  ```
 
 - let run the above ansible playbook
 - Expectation it only supposed to copy the files & restart the apache(httpd), since the ENV already has the required packages & service up and running
