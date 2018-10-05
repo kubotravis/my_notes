@@ -2,7 +2,7 @@ Ansible Reference Notes
 -----------------------
 
 ### Table of Contents
-[1. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#1-architecture--process-flow)
+[1. Introduction](https://docs.ansible.com/ansible/latest/index.html)
 
 [2. Architecture & Process flow](https://github.com/kubotravis/my_notes/blob/master/Ansible-notes/ansible-notes.md#1-architecture--process-flow)
 
