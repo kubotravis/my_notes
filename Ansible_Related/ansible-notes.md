@@ -673,7 +673,7 @@ below is my sample palybook
       when: ansible_os_family == "Redhat"
   
     - name: Copy the INDEX data
-      template: src=template/index.js dest=dest={{ doc_root }}/index.html   # -> in order to copy the local template from the Ansible server to TARGET, also we user the VARS
+      template: src=template/index.j2 dest=dest={{ doc_root }}/index.html   # -> in order to copy the local template from the Ansible server to TARGET, also we user the VARS
       notify:                               # -> If this task's "changed=true" then notify the handlers to continue {here handler will restart the httpd}
         - Restart Apache                    # -> Spell correctly & its case sensitive (same as handlers name anyway)
   
@@ -706,3 +706,232 @@ below is my sample palybook
 PLAY RECAP *********************************************************************
 exp-jslave401z             : ok=6    changed=2    unreachable=0    failed=0
 ```
+
+---
+
+### 7. Roles
+
+- You can say "An abstracted function which is SYSTEM go perform - tags" - Confusing ! me tooo.
+- Which helps to refactor the manage the PLAYBOOK
+[For me looks this for grouping the tasks under ROLE name]
+[In chef we have `include <somerecipename>` some thing like that]
+
+**Role Basics**
+ - ROLE has pre-defined directory structure, something like below
+
+ ── roles
+    ├── builders
+    ├── server-common
+    │   ├── defalts
+    │   ├── files
+    │   ├── handlers
+    │   ├── meta
+    │   ├── tasks
+    │   ├── templates
+    │   └── vars
+    └── webservers
+
+ - From above you no need to required all the directories, for ex if you dont use "handlers" you can remove & same as all servers
+ - Now you no need "REFERNCE" on your play, ex: for copy files yoy no need of absolute path of the SOURCE cuz it automatically picked from the `files` directory
+ - Every directory has the `main.yaml` where you have to place the content [in chef "default.rb"], and its not necessary that you have use `main.yaml` only
+   - You can use some other files name to keep your date, call then using `include` module/directive [same like in chef]
+   - BUT dont create other than `main.yaml` for VARS because its special & unique from the usage perspective
+
+ - `main.yaml` is very go-to file for ansible
+ - `site.yaml` file holds the your infra details & again you can have different files like and call them using the "include/directive"
+ - `site.yaml` you can use `tag` to execute the playbook against that "TAG" 'ed infra
+
+- **PRE/POST tasks**
+    You cam make use like, remove web server from SLB and so operation later put them back to the SLB
+    Or During any operation you can silence the MONITORING alarm & bring it back once it done
+
+ - Additionally TAG can played with "--limit" to execute against only the specific group
+
+**Creating the ROLES**
+
+- Role are should be non-interactive means that fully automated so there is NO `PROMPT` in here
+- As told its required some nice DIR structure as follows, else create one
+
+```
+   $ mkdir -pv webserver/{vars,tasks,handlers,templates}
+  
+  exp
+  ├── ansible.cfg
+  ├── inventory_exp
+  └── roles
+      └── webserver
+          ├── handlers
+          ├── tasks
+          ├── templates
+          └── vars
+```
+ - create the main.yaml file in the all directories under "webserver"
+
+```
+  $ cd roles/webserver
+  $ vim tasks/main.yaml
+
+---
+- name: Install Apache Server
+  yum: name=httpd state=present
+
+- name: Start And Enable Apache
+  service: name=httpd enabled=yes state=started
+
+- name: Copy the INDEX data
+  template: src=index.j2 dest={{ doc_root }}/index.html
+  notify:
+    - Restart Apache
+```
+
+`$ vim vars/main.yaml`
+
+```
+---
+http_port: 80
+doc_dir: /ansible/
+doc_root: /var/www/html
+max_clients: 5
+username: DamnOps
+```
+
+`$ vim handlers/main.yaml`
+
+```
+ ---
+- name: Restart Apache
+  service: name=httpd state=restarted
+```
+
+- now can copy the templates from the previous example to "templates" directory
+ - now go the top directory where "roles" directory present & create the swebserver playbook
+ 
+ `$ vim webserver.yaml # this files name can be anything`
+
+  ```
+  ---
+  - hosts: webserver
+    gather_facts: no
+    become: yes
+    roles:
+    - webserver  # this supposed to be the directory name of the all stuff consists [tasks/templates/vars/handlers]
+  ```
+- Then execute the following command to run the playbook
+
+ `$ ansible-playbook webserver.yaml`
+
+- Now do the same dbserver
+
+ `$ mkdir -pv roles/dbserver/tasks`
+
+ `$ vim roles/dnserver/tasks/main.yaml`
+
+  ```
+  ---
+   - name: Install MariaDB
+     yum: name=mariadb-server state=present
+  
+   - name: Start MariaDB server
+     service: name=mariadb state=started
+  ```
+- now create the dbserver playbook [where roles folder present]
+
+ `$ vim dbserver.yaml`
+
+```
+---
+ - hosts: db
+   gather_facts: no
+   become: yes
+   roles:
+   - dbserver
+```
+
+- Now execute the playbook
+ `$ ansible-playbook dbserver`
+
+- Now lets create the server-common playbook
+
+ `$ mkdir -pv roles/server-common/tasks`
+
+ `$ vim server-common/tasks/stuff.yaml`
+
+```
+---
+- name: Install Stuff-1
+  yum: name=vim state=present
+```
+
+ `$ vim server-common/tasks/sub.yaml`
+
+```
+---
+- name: Install Stuff-2
+  yum: name=screen state=present
+
+- name: Install screen
+  yum: name=mlocate state=present
+```
+
+ `$ vim server-common/tasks/main.yaml`
+
+```
+---
+- include: stuff.yaml
+- include: sub.yaml
+```
+
+- now create the site.yaml file, where roles directory present
+  site.yaml will be apply/encompasses to all server
+
+`$ vim site.yaml`
+
+```
+  ---
+  #- hosts: all
+  - hosts: webserver:db
+    gather_facts: no
+    become: yes
+    roles:
+    - server-common
+  
+  - include: webserver.yaml
+  - include: dbserver.yaml
+```
+
+- then execute the following command
+
+ `$ ansible-playbook site.yaml`
+
+**Ansible Galaxy Intro**
+
+- community based Playbook developemet
+- It works like this -> Download -> Share -> Review
+- installing/downloading the roles from Galaxy
+
+`$ ansible-galaxy install username.rolename`
+
+**Demo on the above**
+- http://galaxy.ansible.com
+- You can also do browse roles & also you can setup the filter to setup the search for the roles
+
+- If you download any roles form Galaxy it stored under `/etc/ansible/roles` directory
+  - something it will look like `/etc/ansible/roles/username.git`
+
+**How we can use this roles then?**
+ - cd ex-7/exp
+   - Update the inventory files if required
+   - now create the "something-new.yaml"
+   - Add the following content
+
+  ```
+  ---
+  - hosts: webserver
+    sudo yes
+    roles:
+     - username.git   # -> this how you are calling that Roles here
+    vars:
+      variable: values  # -> Here we can override the values which already declared in the downloaded role
+  ```
+  - now you can execute the roles
+  `$ ansible-playbook something-new.yaml`
