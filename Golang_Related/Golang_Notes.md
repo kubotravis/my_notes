@@ -3,15 +3,25 @@
 ## Table of Contents
 
 [1. Hello World](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#1-hello-world)
+
 [2. Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#1-values)
+
 [3. Variables](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#3-variables)
+
 [4. Constants](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#4-constants)
+
 [5. For](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#5-for)
+
 [6. If/Else](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#6-if-else)
+
 [7.Switch](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#7-switch)
+
 [8.Arrays](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#8-arrays)
+
 [9.Slices](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#9-slices)
+
 [10.Maps](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#10-maps)
+
 
 # 1. Hello World
 
