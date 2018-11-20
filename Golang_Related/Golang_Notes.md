@@ -16,14 +16,14 @@ func main(){
 
 Run the code with compiling (on demand with go bin)
 
-```
+```bash
 $ go run hello-world.go
 hello world
 ```
 
 Build the binary from the source
 
-```
+```bash
 $ go build hello-world.go
 $ ls 
 hello-world hello-world.go 
@@ -31,7 +31,7 @@ hello-world hello-world.go
 
 Now run the binary
 
-```
+```bash
 $ ./hello-world
 ```
 
