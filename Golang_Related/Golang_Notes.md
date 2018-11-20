@@ -4,6 +4,9 @@
 
 [1. Hello World](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#1-hello-world)
 [2. Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#1-values)
+[3](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#3-variables)
+[4](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#4-constants)
+[5](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#5-for)
 
 # 1. Hello World
 
@@ -163,7 +166,7 @@ constant
 -0.28470407323754404
 ```
 
-#05. For
+# 05. For
 
 `for` is the only Go's looping construct.
 
