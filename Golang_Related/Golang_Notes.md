@@ -4,7 +4,7 @@
 
 [1. Hello World](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#1-hello-world)
 
-[2. Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#1-values)
+[2. Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#2-values)
 
 [3. Variables](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#3-variables)
 
