@@ -12,7 +12,7 @@
 
 [5. For](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#5-for)
 
-[6. If/Else](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#6-if-else)
+[6. If/Else](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#6-ifelse)
 
 [7.Switch](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#7-switch)
 
@@ -60,7 +60,7 @@ Now run the binary
 $ ./hello-world
 ```
 
-# 2 . Values
+# 2. Values
 
 Its has various type of value types and they are,
 - Strings, Intergers, Booleans, Floats and etc
