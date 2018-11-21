@@ -11,7 +11,7 @@ func main() {
 // We can set and get just like with arrays
   s[0] = "a"
   s[1] = "b"
-  s[3] = "c"
+  s[2] = "c"
   fmt.Println("set:", s)
   fmt.Println("get:", s[2])
 

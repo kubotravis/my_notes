@@ -16,7 +16,7 @@ func main() {
   var d = true
   fmt.Println(d)
 
-// variabled declared with any value initialized with 0 (its int 0)
+// variable declared with any value initialized with 0 (its int 0)
   var e int
   fmt.Println(e)
 

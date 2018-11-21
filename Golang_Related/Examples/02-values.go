@@ -8,8 +8,8 @@ func main() {
   fmt.Println("go" + "lang")
 
 // Integer and Float
-  fmt.Println("2+2", 3+3)
-  fmt.Println("9.0/4.0", 9/4)
+  fmt.Println("3+3 =", 3+3)
+  fmt.Println("9.0/4.0 =", 9/4)
 
 // Boolean operator
   fmt.Println(true && false)

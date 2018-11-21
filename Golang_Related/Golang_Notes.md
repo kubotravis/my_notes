@@ -76,8 +76,8 @@ func main() {
   fmt.Println("go" + "lang")
 
 // Integer and Float
-  fmt.Println("2+2", 3+3)
-  fmt.Println("9.0/4.0", 9/4)
+  fmt.Println("3+3 =", 3+3)
+  fmt.Println("9.0/4.0 =", 9/4)
 
 // Boolean operator
   fmt.Println(true && false)
@@ -100,7 +100,7 @@ false
 
 # 3. Variables
 
-In go, Variables are explicitly declared and used by compiles, e.g - check the type-correctness of the function calls
+In go, Variables are explicitly declared and used by compilers, e.g - check the type-correctness of the function calls
 
 ```go
 package main
@@ -121,7 +121,7 @@ func main() {
   var d = true
   fmt.Println(d)
 
-// variabled declared with any value initialized with 0 (its int 0)
+// variable declared with any value initialized with 0 (its int 0)
   var e int
   fmt.Println(e)
 
@@ -265,7 +265,7 @@ func main() {
     fmt.Println("8 is divided by 4")
   }
 
-// 
+// A statement can precede conditionals; any variables declared in this statement are available in all branches.
   if num := 9 ; num < 0 {
     fmt.Println(num, "is negative")
   } else if num < 10 {
@@ -282,6 +282,9 @@ $ go run 06-if-else.go
 8 is divided by 4
 9 has 1 digit
 ```
+**Note**
+- Note that you don’t need parentheses around conditions in Go, but that the braces are required.
+- There is no ternary if in Go, so you’ll need to use a full if statement even for basic conditions.
 
 # 7. Switch
 
@@ -369,7 +372,8 @@ import "fmt"
 func main() {
 
 // An array a that will hold exactly 5 ints.
-// The type of elements and length are both part of the array’s type. By default an array is zero-valued, which for ints means 0s.
+// The type of elements and length are both part of the array’s type.
+// By default an array is zero-valued, which for ints means 0s.
   var a [5]int
   fmt.Println("emp:", a)
 
@@ -434,7 +438,7 @@ func main() {
 // We can set and get just like with arrays
   s[0] = "a"
   s[1] = "b"
-  s[3] = "c"
+  s[2] = "c"
   fmt.Println("set:", s)
   fmt.Println("get:", s[2])
 
@@ -480,9 +484,20 @@ func main() {
 }
 ```
 
-**Note**
-
-Above code is has bug - yet to be fixed
+```
+$ go run 09-slices.go
+emp: [  ]
+set: [a b c]
+get: c
+len: 3
+apnd: [a b c d e f]
+cpy: [a b c d e f]
+sl1: [c d e]
+sl2: [a b c d e]
+sl3: [c d e f]
+dcl: [g h i]
+2d:  [[0] [1 2] [2 3 4]]
+```
 
 # 10. Maps
 Maps are Go’s built-in associative data type (sometimes called hashes or dicts in other languages).
