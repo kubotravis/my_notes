@@ -413,6 +413,8 @@ dcl: [1 2 3 4 5]
 # 9. Slices
 - `Slices` are a key data type in Go, giving a more powerful interface to sequences than arrays.
 
+- A slice is a convenient, flexible and powerful wrapper on top of an array. Slices do not own any data on their own. They are the just references to existing arrays.
+
 - Unlike arrays, slices are typed only by the elements they contain (not the number of elements).
 
 - In addition to these basic operations, slices support several more that make them richer than arrays. One is the builtin append, which returns a slice containing one or more new values.
@@ -553,4 +555,69 @@ len: 2
 map: map[k1:7]
 prs: false
 map: map[bar:2 foo:1]
+```
+
+# 11. Range
+
+- `Range` is the iteration over the variety of data structures
+
+- Lets go the sample code
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+// Here we use range to sum the numbers in a slice. Arrays work like this too
+  nums := []int{2, 3, 4}
+  sum := 0
+
+  for _, num := range nums {
+    sum += num
+  }
+  fmt.Println("sum:", sum)
+// range on arrays and slices provides both the index and value for each entry
+// Above we didn’t need the index, so we ignored it with the blank identifier _.
+// Sometimes we actually want the indexes though.
+  for i, num := range nums {
+    if num == 3 {
+      fmt.Println("index:", i)
+    }
+  }
+
+// range on map iterates over key/value pairs
+  kvs := map[string]string{"a": "apple", "b" : "banana", "c" : "cat"}
+  for k, v := range kvs {
+    fmt.Println("%s -> %s\n", k ,v)
+  }
+// range can also iterate over just the keys of a map.
+  for k := range kvs {
+    fmt.Println("Key :", k)
+  }
+
+// range on strings iterates over Unicode code points
+// The first value is the starting byte index of the rune and the second the rune itself.
+  for i, c := range "go" {
+    fmt.Println(i, c)
+  }
+}
+```
+
+```
+$ go run Examples/11-range.go  
+sum: 9
+index: 1
+%s -> %s
+ a apple
+%s -> %s
+ b banana
+%s -> %s
+ c cat
+Key : a
+Key : b
+Key : c
+0 103
+1 111
 ```
