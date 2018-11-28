@@ -22,6 +22,9 @@
 
 [10.Maps](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#10-maps)
 
+[11. Range](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#11-range)
+
+[12. Functions](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#12-functions)
 
 # 1. Hello World
 
