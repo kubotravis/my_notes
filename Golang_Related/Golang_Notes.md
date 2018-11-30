@@ -26,6 +26,8 @@
 
 [12. Functions](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#12-functions)
 
+[13. Multiple Return Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#12-multiple-return-values)
+
 # 1. Hello World
 
 We are gonna see code for classic hello world program and how we can execute them,
@@ -662,3 +664,40 @@ $ go run Examples/12-functions.go
 1 + 2 =  3
 1 + 2 + 3 = 6
 ```
+
+# 13. Multiple Return Values
+
+- Go has built-in support for multiple return values.
+- This feature is used often in idiomatic Go, for example to return both result and error values from a function.
+
+```go
+package main
+
+import "fmt"
+
+// The (int, int) in this function signature shows that the function returns 2 ints.
+func vals() (int, int) {
+  return 3, 7
+}
+
+func main() {
+
+  // Here we use the 2 different return values from the call with multiple assignment.
+  a, b := vals()
+  fmt.Println(a)
+  fmt.Println(b)
+
+  // If you only want a subset of the returned values, use the blank identifier _.
+  _, c := vals()
+  fmt.Println(c)
+}
+```
+
+```
+go run Examples/13-multiple-vals.go
+3
+7
+7
+```
+
+- Accepting a variable number of arguments is another nice feature of Go functions
