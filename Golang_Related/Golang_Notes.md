@@ -26,7 +26,7 @@
 
 [12. Functions](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#12-functions)
 
-[13. Multiple Return Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#12-multiple-return-values)
+[13. Multiple Return Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#13-multiple-return-values)
 
 # 1. Hello World
 
