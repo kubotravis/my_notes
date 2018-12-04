@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// Function takes arbitary no.og arguments
+// Function takes arbitary no.of arguments
 func sum(nums...int) {
   fmt.Println(nums, " ")
   total := 0
