@@ -28,6 +28,8 @@
 
 [13. Multiple Return Values](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#13-multiple-return-values)
 
+[14. Variadic Functions](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#14-variadic-function)
+
 # 1. Hello World
 
 We are gonna see code for classic hello world program and how we can execute them,
@@ -702,7 +704,7 @@ go run Examples/13-multiple-vals.go
 
 - Accepting a variable number of arguments is another nice feature of Go functions
 
-# 13. Variadic Functions
+# 14. Variadic Functions
 
 - Variadic functions can be called with any number of variables
 - Ex. `fmt.Println` is a variadic function
