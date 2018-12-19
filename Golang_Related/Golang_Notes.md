@@ -14,13 +14,13 @@
 
 [6. If/Else](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#6-ifelse)
 
-[7.Switch](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#7-switch)
+[7. Switch](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#7-switch)
 
-[8.Arrays](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#8-arrays)
+[8. Arrays](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#8-arrays)
 
-[9.Slices](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#9-slices)
+[9. Slices](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#9-slices)
 
-[10.Maps](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#10-maps)
+[10. Maps](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#10-maps)
 
 [11. Range](https://github.com/kubotravis/my_notes/blob/master/Golang_Related/Golang_Notes.md#11-range)
 
