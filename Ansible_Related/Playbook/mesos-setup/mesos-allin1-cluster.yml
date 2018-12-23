@@ -1,0 +1,67 @@
+---
+# tasks file for mesos101z
+
+- name: Setting up the all-one-mesos setup on the Virtual machine
+  hosts: localhost
+  tasks:
+
+  - name: Adding the Docker repository
+    get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docker.repo
+
+  - name: Adding the Mesos and Marathon repository
+    yum:
+      name: http://repos.mesosphere.com/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm
+      state: present
+
+  - name: Adding the Zookeeper repository
+    yum:
+      name: http://archive.cloudera.com/cdh4/one-click-install/redhat/6/x86_64/cloudera-cdh-4-0.x86_64.rpm
+      state: present
+
+  - name: Installing the Docker-CE on the server
+    yum:
+      name: docker-ce
+      state: present
+
+  - name: Installing the Mesos & Marathon
+    yum:
+      name:
+        - mesos
+        - marathon
+      state: present
+
+  - name: Installing the Zookeeper
+    yum:
+      name:
+        - zookeeper
+        - zookeeper-server
+      state: present
+
+  - name: Initiate the zookeeper
+    become: yes
+    become_user: zookeeper
+    command: zookeeper-server-initialize --myid=1
+    args:
+      creates: /var/lib/zookeeper
+
+  - name: Start the Zookeeper daemon
+    service:
+      name: zookeeper-server
+      state: started
+
+  - name: Start the Mesos Master daemon
+    service:
+      name: mesos-master
+      state:  started
+
+  - name: Start the Mesos slave daemon
+    service:
+      name: mesos-slave
+      state: started
+
+  - name: Start the Marathon Framework daemon
+    service:
+      name: marathon
+      state: started
